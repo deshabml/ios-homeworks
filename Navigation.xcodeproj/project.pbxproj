@@ -13,6 +13,10 @@
 		DDB4CD7D292CB1930064EDDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD7B292CB1930064EDDF /* Main.storyboard */; };
 		DDB4CD7F292CB1940064EDDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD7E292CB1940064EDDF /* Assets.xcassets */; };
 		DDB4CD82292CB1940064EDDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD80292CB1940064EDDF /* LaunchScreen.storyboard */; };
+		DDB4CD8A292CC0C50064EDDF /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD89292CC0C50064EDDF /* ProfileView.xib */; };
+		DDB4CD8C292CCFDE0064EDDF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4CD8B292CCFDE0064EDDF /* ProfileView.swift */; };
+		DDB4CD8E292CD1CA0064EDDF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD8D292CD1CA0064EDDF /* Profile.storyboard */; };
+		DDB4CD90292CD2020064EDDF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4CD8F292CD2020064EDDF /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		DDB4CD7E292CB1940064EDDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDB4CD81292CB1940064EDDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DDB4CD83292CB1940064EDDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDB4CD89292CC0C50064EDDF /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
+		DDB4CD8B292CCFDE0064EDDF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		DDB4CD8D292CD1CA0064EDDF /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		DDB4CD8F292CD2020064EDDF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +71,10 @@
 				DDB4CD7E292CB1940064EDDF /* Assets.xcassets */,
 				DDB4CD80292CB1940064EDDF /* LaunchScreen.storyboard */,
 				DDB4CD83292CB1940064EDDF /* Info.plist */,
+				DDB4CD89292CC0C50064EDDF /* ProfileView.xib */,
+				DDB4CD8B292CCFDE0064EDDF /* ProfileView.swift */,
+				DDB4CD8D292CD1CA0064EDDF /* Profile.storyboard */,
+				DDB4CD8F292CD2020064EDDF /* ProfileViewController.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -125,7 +137,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDB4CD8A292CC0C50064EDDF /* ProfileView.xib in Resources */,
 				DDB4CD82292CB1940064EDDF /* LaunchScreen.storyboard in Resources */,
+				DDB4CD8E292CD1CA0064EDDF /* Profile.storyboard in Resources */,
 				DDB4CD7F292CB1940064EDDF /* Assets.xcassets in Resources */,
 				DDB4CD7D292CB1930064EDDF /* Main.storyboard in Resources */,
 			);
@@ -138,7 +152,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDB4CD8C292CCFDE0064EDDF /* ProfileView.swift in Sources */,
 				DDB4CD7A292CB1930064EDDF /* ViewController.swift in Sources */,
+				DDB4CD90292CD2020064EDDF /* ProfileViewController.swift in Sources */,
 				DDB4CD76292CB1930064EDDF /* AppDelegate.swift in Sources */,
 				DDB4CD78292CB1930064EDDF /* SceneDelegate.swift in Sources */,
 			);
@@ -287,7 +303,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 62VLSN5H88;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -315,7 +331,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 62VLSN5H88;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
