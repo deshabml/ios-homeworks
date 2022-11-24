@@ -11,9 +11,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    func createFirstController() -> UINavigationController {
+        let nvc = UINavigationController(rootViewController: ViewController())
+        nvc.tabBarItem = UITabBarItem(title: "Лента пользователя", image: UIImage(systemName: "lineweight"), tag: 0)
+        return nvc
+    }
+
+    func createSecondController() -> UINavigationController {
+        let nvc = UINavigationController(rootViewController: SecondViewController())
+        nvc.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.fill"), tag: 1)
+        return nvc
+    }
+
+    func creatTabBar() -> UITabBarController {
+        let tabBar = UITabBarController()
+        tabBar.viewControllers = [createFirstController(), createSecondController()]
+        tabBar.tabBar.backgroundColor = .gray
+        tabBar.tabBar.tintColor = .white
+        return tabBar
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let winScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: winScene)
+        window.rootViewController = creatTabBar()
+        window.makeKeyAndVisible()
+
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
