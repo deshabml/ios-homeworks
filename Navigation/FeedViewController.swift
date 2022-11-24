@@ -14,7 +14,6 @@ class FeedViewController: UIViewController {
 
 
     @objc func buttonAction() {
-        print("Button pressed")
         let pvc = PostViewController()
         pvc.post = self.post
         navigationController?.pushViewController(pvc, animated: true)
@@ -38,7 +37,7 @@ class FeedViewController: UIViewController {
                          action: #selector(buttonAction),
                          for: .touchUpInside)
         button.center.x = view.center.x
-        self.view.addSubview(button)
+        view.addSubview(button)
 
     }
     override func viewDidLayoutSubviews() {
