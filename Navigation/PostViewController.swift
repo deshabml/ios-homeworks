@@ -9,9 +9,11 @@ import UIKit
 
 class PostViewController: UIViewController {
 
+    var post: Post = Post(title: "")
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
-        title = "Пост"
+        title = post.title
     }
 }

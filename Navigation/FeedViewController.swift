@@ -9,14 +9,17 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    @objc
-    func buttonAction() {
+    var button: UIButton!
+    var post: Post = Post(title: "Горячая новость!")
+
+
+    @objc func buttonAction() {
         print("Button pressed")
-        
-        self.navigationController?.pushViewController(PostViewController(), animated: true)
+        let pvc = PostViewController()
+        pvc.post = self.post
+        navigationController?.pushViewController(pvc, animated: true)
     }
 
-    var button: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
