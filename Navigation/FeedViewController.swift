@@ -9,21 +9,37 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
+    @objc
+    func buttonAction() {
+        print("Button pressed")
+        
+        self.navigationController?.pushViewController(PostViewController(), animated: true)
+    }
+
+    var button: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .darkGray
+        view.addSubview(UIButton())
+        button = UIButton(frame: CGRect(x: 50,
+                                        y: 200,
+                                        width: 100,
+                                        height: 60))
+        button.setTitle("Пост",
+                        for: .normal)
+        button.setTitleColor(.white,
+                             for: .normal)
+        button.backgroundColor = .blue
+        button.addTarget(self,
+                         action: #selector(buttonAction),
+                         for: .touchUpInside)
+        button.center.x = view.center.x
+        self.view.addSubview(button)
 
-        // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        button.center.x = view.center.x
     }
-    */
-
 }
