@@ -9,7 +9,17 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    var button: UIButton!
+    var button: UIButton = {
+        var button = UIButton(frame: CGRect(x: 50,
+                                        y: 200,
+                                        width: 100,
+                                        height: 60))
+        button.setTitle("Пост", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .blue
+        return button
+    }()
+    
     var post: Post = Post(title: "Горячая новость!")
 
 
@@ -24,15 +34,6 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .darkGray
         view.addSubview(UIButton())
-        button = UIButton(frame: CGRect(x: 50,
-                                        y: 200,
-                                        width: 100,
-                                        height: 60))
-        button.setTitle("Пост",
-                        for: .normal)
-        button.setTitleColor(.white,
-                             for: .normal)
-        button.backgroundColor = .blue
         button.addTarget(self,
                          action: #selector(buttonAction),
                          for: .touchUpInside)
