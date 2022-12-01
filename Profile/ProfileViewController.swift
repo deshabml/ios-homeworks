@@ -17,20 +17,18 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .lightGray
         title = "Profile"
         let novigationBarColor = UINavigationBarAppearance()
-
         novigationBarColor.titleTextAttributes = [.foregroundColor: UIColor.black]
-//        novigationBarColor.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
         novigationBarColor.backgroundColor = .white
-
-//        navigationItem.standardAppearance = novigationBarColor
         navigationItem.scrollEdgeAppearance = novigationBarColor
-//        self.navigationItem.accessibilityNavigationStyle = novigationBarColor
-
         view.addSubview(header)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         header.frame = view.frame
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
