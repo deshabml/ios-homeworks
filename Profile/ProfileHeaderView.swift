@@ -9,6 +9,15 @@ import UIKit
 
 class ProfileHeaderView: UIView {
 
+    let nameCat: UILabel = {
+        let nameCat = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        nameCat.text = "Hipster Cat"
+        nameCat.font = UIFont.boldSystemFont(ofSize: 18)
+        nameCat.textColor = .black
+        return nameCat
+    }()
+
+
 
     let button: UIButton = {
         var button = UIButton(frame: CGRect(x: 0,
@@ -19,9 +28,10 @@ class ProfileHeaderView: UIView {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .blue
         button.layer.cornerRadius = 15
-        button.layer.shadowOpacity = 1
-        button.layer.shadowRadius = 5
-        button.layer.shadowOffset = CGSize(width: 5, height: 5)
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 4, height: 4)
         return button
     }()
     let avatar: UIView = {
@@ -50,7 +60,9 @@ class ProfileHeaderView: UIView {
     }
 
     override func layoutSubviews() {
-        backgroundColor = .lightGray
+        nameCat.frame = CGRect(x: 0, y: Int(frame.maxY) / 9 + 27, width: 100, height: 30)
+        nameCat.center.x = center.x
+        addSubview(nameCat)
         avatar.frame = CGRect(x: 16,
                               y: Int(frame.maxY) / 9 + 16,
                               width: 100,
