@@ -23,7 +23,7 @@ class ProfileHeaderView: UIView {
     let textStatus: UILabel = {
         let textStatus = UILabel(frame: CGRect(x: 0,
                                             y: 0,
-                                            width: 150,
+                                            width: 200,
                                             height: 30))
         textStatus.text = "Waiting for something..."
         textStatus.font = UIFont(name: "regular", size: 14)
@@ -49,6 +49,11 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         return button
     }()
+
+    @objc func buttonPressed() {
+        guard let textPrint = textStatus.text else {return}
+        print(textPrint)
+    }
     let avatar: UIView = {
 
         var avatar = UIView(frame: CGRect(x: 16,
@@ -78,32 +83,32 @@ class ProfileHeaderView: UIView {
         nameCat.frame = CGRect(x: 0, y: Int(frame.maxY) / 9 + 27, width: 100, height: 30)
         nameCat.center.x = center.x
         addSubview(nameCat)
-        textStatus.frame = CGRect(x: 0, y: Int(frame.maxY) / 9 + 84, width: 150, height: 30)
-        textStatus.center.x = center.x
+        textStatus.frame = CGRect(x: 0, y: Int(frame.maxY) / 9 + 84, width: 200, height: 30)
+        textStatus.center.x = center.x + 50
         addSubview(textStatus)
         avatar.frame = CGRect(x: 16,
                               y: Int(frame.maxY) / 9 + 16,
                               width: 100,
                               height: 100)
         addSubview(avatar)
-        print(type(of: Int(frame.maxY)))
-        print(Int(frame.minY))
-
-        let maxX = Int(frame.maxX)
-        print("maxY = \(maxX)")
         button.frame = CGRect(x: 0,
                               y: Int(frame.maxY) / 9 + 132,
                               width: (Int(frame.maxX) - 32),
                               height: 50)
         button.center.x = center.x
+        button.addTarget(self,
+                         action: #selector(buttonPressed),
+                         for: .touchUpInside)
         addSubview(button)
-
     }
 
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("")
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
 }
