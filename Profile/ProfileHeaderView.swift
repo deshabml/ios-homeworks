@@ -10,11 +10,26 @@ import UIKit
 class ProfileHeaderView: UIView {
 
     let nameCat: UILabel = {
-        let nameCat = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        let nameCat = UILabel(frame: CGRect(x: 0,
+                                            y: 0,
+                                            width: 100,
+                                            height: 30))
         nameCat.text = "Hipster Cat"
         nameCat.font = UIFont.boldSystemFont(ofSize: 18)
         nameCat.textColor = .black
         return nameCat
+    }()
+
+    let textStatus: UILabel = {
+        let textStatus = UILabel(frame: CGRect(x: 0,
+                                            y: 0,
+                                            width: 150,
+                                            height: 30))
+        textStatus.text = "Waiting for something..."
+        textStatus.font = UIFont(name: "regular", size: 14)
+        textStatus.textColor = .gray
+        return textStatus
+
     }()
 
 
@@ -63,6 +78,9 @@ class ProfileHeaderView: UIView {
         nameCat.frame = CGRect(x: 0, y: Int(frame.maxY) / 9 + 27, width: 100, height: 30)
         nameCat.center.x = center.x
         addSubview(nameCat)
+        textStatus.frame = CGRect(x: 0, y: Int(frame.maxY) / 9 + 84, width: 150, height: 30)
+        textStatus.center.x = center.x
+        addSubview(textStatus)
         avatar.frame = CGRect(x: 16,
                               y: Int(frame.maxY) / 9 + 16,
                               width: 100,
