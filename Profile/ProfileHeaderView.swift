@@ -86,6 +86,7 @@ class ProfileHeaderView: UIView {
     }()
 
     override func layoutSubviews() {
+        super.layoutSubviews()
         addSubviews([
             fullNameLabel,
             statusLabel,
@@ -114,6 +115,7 @@ class ProfileHeaderView: UIView {
 }
 
 extension ProfileHeaderView {
+
     private func addSubviews(_ arrayView: [UIView]) {
         arrayView.forEach {
             addSubview($0)
