@@ -9,9 +9,9 @@ import UIKit
 
 class ProfileHeaderView: UIView {
 
-    private var statusText: String = "Waiting for something..."
+    private lazy var statusText: String = "Waiting for something..."
 
-    let fullNameLabel: UILabel = {
+    private lazy var fullNameLabel: UILabel = {
         let fullNameLabel = UILabel(frame: .zero)
         fullNameLabel.text = "Hipster Cat"
         fullNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -20,7 +20,7 @@ class ProfileHeaderView: UIView {
         return fullNameLabel
     }()
 
-    let statusLabel: UILabel = {
+    private lazy var statusLabel: UILabel = {
         let statusLabel = UILabel(frame: .zero)
         statusLabel.text = "Waiting for something..."
         statusLabel.font = UIFont(name: "regular", size: 14)
@@ -30,7 +30,7 @@ class ProfileHeaderView: UIView {
 
     }()
 
-    let setStatusButton: UIButton = {
+    private lazy var setStatusButton: UIButton = {
         var setStatusButton = UIButton(frame: .zero)
         setStatusButton.setTitle("Show status", for: .normal)
         setStatusButton.setTitleColor(.white, for: .normal)
@@ -40,11 +40,14 @@ class ProfileHeaderView: UIView {
         setStatusButton.layer.shadowRadius = 4
         setStatusButton.layer.shadowColor = UIColor.black.cgColor
         setStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        setStatusButton.addTarget(self,
+                         action: #selector(buttonPressed),
+                         for: .touchUpInside)
         setStatusButton.translatesAutoresizingMaskIntoConstraints = false
         return setStatusButton
     }()
 
-    let avatarImageView: UIView = {
+    private lazy var avatarImageView: UIView = {
         var avatarImageView = UIView(frame: CGRect(x: 0,
                                                    y: 0,
                                                    width: 130,
@@ -65,7 +68,7 @@ class ProfileHeaderView: UIView {
         return avatarImageView
     }()
 
-    let statusTextField: UITextField = {
+    private lazy var statusTextField: UITextField = {
         let statusTextField = UITextField(frame: .zero)
         statusTextField.backgroundColor = .white
         statusTextField.layer.cornerRadius = 12
@@ -75,12 +78,22 @@ class ProfileHeaderView: UIView {
         statusTextField.textColor = .black
         statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
         statusTextField.leftViewMode = .always
+        statusTextField.addTarget(self,
+                                  action: #selector(statusTextChanged),
+                                  for: .editingChanged)
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         return statusTextField
     }()
 
-    init() {
-        super.init(frame: .zero)
+    override func layoutSubviews() {
+        addSubviews([
+            fullNameLabel,
+            statusLabel,
+            statusTextField,
+            avatarImageView,
+            setStatusButton
+        ])
+        installingСonstraints()
     }
 
     @objc func buttonPressed() {
@@ -94,19 +107,20 @@ class ProfileHeaderView: UIView {
         statusText = textString
     }
 
-    override func layoutSubviews() {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        endEditing(true)
+    }
 
-        addSubview(fullNameLabel)
-        addSubview(statusLabel)
-        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-        addSubview(statusTextField)
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+}
 
-        addSubview(avatarImageView)
-        setStatusButton.addTarget(self,
-                         action: #selector(buttonPressed),
-                         for: .touchUpInside)
-        addSubview(setStatusButton)
+extension ProfileHeaderView {
+    private func addSubviews(_ arrayView: [UIView]) {
+        arrayView.forEach {
+            addSubview($0)
+        }
+    }
+
+    private func installingСonstraints() {
         NSLayoutConstraint.activate([
             fullNameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
@@ -126,13 +140,4 @@ class ProfileHeaderView: UIView {
             setStatusButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        endEditing(true)
-    }
-
 }

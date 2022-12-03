@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    let header: UIView = {
+    lazy private var header: UIView = {
         let header = ProfileHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
         return header
