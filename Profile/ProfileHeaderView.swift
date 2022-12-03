@@ -16,6 +16,7 @@ class ProfileHeaderView: UIView {
         fullNameLabel.text = "Hipster Cat"
         fullNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
         fullNameLabel.textColor = .black
+        fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
         return fullNameLabel
     }()
 
@@ -24,11 +25,10 @@ class ProfileHeaderView: UIView {
         statusLabel.text = "Waiting for something..."
         statusLabel.font = UIFont(name: "regular", size: 14)
         statusLabel.textColor = .gray
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
         return statusLabel
 
     }()
-
-
 
     let setStatusButton: UIButton = {
         var setStatusButton = UIButton(frame: .zero)
@@ -40,15 +40,15 @@ class ProfileHeaderView: UIView {
         setStatusButton.layer.shadowRadius = 4
         setStatusButton.layer.shadowColor = UIColor.black.cgColor
         setStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
         return setStatusButton
     }()
 
     let avatarImageView: UIView = {
-
         var avatarImageView = UIView(frame: CGRect(x: 0,
-                                          y: 0,
-                                          width: 130,
-                                          height: 130))
+                                                   y: 0,
+                                                   width: 130,
+                                                   height: 130))
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         avatarImageView.clipsToBounds = true
         avatarImageView.layer.borderColor = UIColor.white.cgColor
@@ -61,6 +61,7 @@ class ProfileHeaderView: UIView {
                                height: 130)
         myLayer.contents = myImage
         avatarImageView.layer.addSublayer(myLayer)
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
 
@@ -74,6 +75,7 @@ class ProfileHeaderView: UIView {
         statusTextField.textColor = .black
         statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
         statusTextField.leftViewMode = .always
+        statusTextField.translatesAutoresizingMaskIntoConstraints = false
         return statusTextField
     }()
 
@@ -93,44 +95,36 @@ class ProfileHeaderView: UIView {
     }
 
     override func layoutSubviews() {
-        fullNameLabel.frame = CGRect(x: 0,
-                               y: Int(frame.maxY) / 9 + 27,
-                               width: 100,
-                               height: 30)
-        fullNameLabel.center.x = center.x + 10
+
         addSubview(fullNameLabel)
-        statusLabel.frame = CGRect(x: 0,
-                                  y: Int(frame.maxY) / 9 + 84,
-                                  width: 200,
-                                  height: 30)
-        statusLabel.center.x = center.x + 60
         addSubview(statusLabel)
-        statusTextField.frame = CGRect(x: 0,
-                                   y: Int(frame.maxY) / 9 + 118,
-                                   width: 200,
-                                   height: 40)
-        statusTextField.center.x = center.x + 60
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         addSubview(statusTextField)
-        avatarImageView.frame = CGRect(x: 16,
-                              y: Int(frame.maxY) / 9 + 16,
-                              width: 130,
-                              height: 130)
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+
         addSubview(avatarImageView)
-        setStatusButton.frame = CGRect(x: 0,
-                              y: Int(frame.maxY) / 9 + 172,
-                              width: (Int(frame.maxX) - 32),
-                              height: 50)
-        setStatusButton.center.x = center.x
         setStatusButton.addTarget(self,
                          action: #selector(buttonPressed),
                          for: .touchUpInside)
         addSubview(setStatusButton)
-    }
-
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("")
+        NSLayoutConstraint.activate([
+            fullNameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
+            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 40 ),
+            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10),
+            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            statusTextField.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 130),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 130),
+            avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
 
     required init?(coder: NSCoder) {
@@ -139,7 +133,6 @@ class ProfileHeaderView: UIView {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         endEditing(true)
-
     }
 
 }
