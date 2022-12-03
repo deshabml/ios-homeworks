@@ -9,12 +9,27 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    let header: UIView = ProfileHeaderView()
-
+    let header: UIView = {
+        let header = ProfileHeaderView()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        return header
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
+        titleSetting()
+        installingСonstraints()
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+}
+
+extension ProfileViewController {
+
+    private func titleSetting () {
         title = "Profile"
         let novigationBarColor = UINavigationBarAppearance()
         novigationBarColor.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -23,12 +38,12 @@ class ProfileViewController: UIViewController {
         view.addSubview(header)
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        header.frame = view.frame
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+    private func installingСonstraints() {
+        NSLayoutConstraint.activate([
+            header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            header.heightAnchor.constraint(equalToConstant: 220)
+        ])
     }
 }
