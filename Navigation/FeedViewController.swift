@@ -9,19 +9,48 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    var button: UIButton = {
-        var button = UIButton(frame: CGRect(x: 50,
-                                        y: 200,
-                                        width: 100,
-                                        height: 60))
+    private lazy var buttonOne: UIButton = {
+        var button = UIButton(frame: .zero)
+        button.setTitle("Пост", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .orange
+        button.addTarget(self,
+                         action: #selector(buttonAction),
+                         for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var buttonTwo: UIButton = {
+        var button = UIButton(frame: .zero)
         button.setTitle("Пост", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .blue
+        button.addTarget(self,
+                         action: #selector(buttonAction),
+                         for: .touchUpInside)
         return button
     }()
     
-    var post: Post = Post(title: "Горячая новость!")
+    private lazy var post: Post = Post(title: "Горячая новость!")
 
+    private lazy var stackButton: UIStackView = {
+        let stackButton = UIStackView()
+        stackButton.axis = .vertical
+        stackButton.distribution = .fillEqually
+        stackButton.alignment = .fill
+        stackButton.spacing = 10
+        stackButton.translatesAutoresizingMaskIntoConstraints = false
+        stackButton.addArrangedSubview(buttonOne)
+        stackButton.addArrangedSubview(buttonTwo)
+        return stackButton
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .darkGray
+        view.addSubview(stackButton)
+        installingСonstraints()
+    }
 
     @objc func buttonAction() {
         let pvc = PostViewController()
@@ -29,20 +58,16 @@ class FeedViewController: UIViewController {
         navigationController?.pushViewController(pvc, animated: true)
     }
 
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .darkGray
-        view.addSubview(UIButton())
-        button.addTarget(self,
-                         action: #selector(buttonAction),
-                         for: .touchUpInside)
-        button.center.x = view.center.x
-        view.addSubview(button)
+extension FeedViewController {
 
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        button.center.x = view.center.x
+    private func installingСonstraints() {
+        NSLayoutConstraint.activate([
+            stackButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackButton.heightAnchor.constraint(equalToConstant: 120),
+            stackButton.widthAnchor.constraint(equalToConstant: 200)
+        ])
     }
 }

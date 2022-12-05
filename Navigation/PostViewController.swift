@@ -9,7 +9,7 @@ import UIKit
 
 class PostViewController: UIViewController {
 
-    var post: Post = Post(title: "")
+    lazy var post: Post = Post(title: "")
 
     @objc func buttonAction() {
         let ivc = InfoViewController()
@@ -20,7 +20,6 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .purple
         title = post.title
-
         let myButten = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(buttonAction))
         navigationItem.rightBarButtonItem = myButten
     }
