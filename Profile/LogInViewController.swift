@@ -11,6 +11,7 @@ class LogInViewController: UIViewController {
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = LogInScrollView()
+        scrollView.logInButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -49,5 +50,10 @@ extension LogInViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
+    }
+
+    @objc func buttonAction() {
+        let pvc = ProfileViewController()
+        navigationController?.pushViewController(pvc, animated: true)
     }
 }

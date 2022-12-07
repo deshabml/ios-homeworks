@@ -54,7 +54,7 @@ class LogInScrollView: UIScrollView, UITextFieldDelegate {
         return stackTextField
     }()
 
-    private lazy var logInButton: UIButton = {
+    lazy var logInButton: UIButton = {
         var logInButton = UIButton(frame: .zero)
         logInButton.setTitle("Log In", for: .normal)
         logInButton.setTitleColor(.white, for: .normal)
