@@ -25,42 +25,18 @@ class LogInScrollView: UIScrollView {
 
     private lazy var loginTextField: UITextField = {
         let loginTextField = UITextField(frame: .zero)
-        loginTextField.backgroundColor = .systemGray6
-        loginTextField.layer.cornerRadius = 10
-        loginTextField.layer.borderWidth = 0.5
-        loginTextField.layer.borderColor = UIColor.lightGray.cgColor
         loginTextField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        loginTextField.font = UIFont(name: "sistemFont", size: 16)
-        loginTextField.textColor = .black
-//        statusTextField.tintColor = UIColor.accentColor
-        loginTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: loginTextField.frame.height))
-        loginTextField.leftViewMode = .always
         loginTextField.placeholder = "Email or phone"
-//        statusTextField.addTarget(self,
-//                                  action: #selector(statusTextChanged),
-//                                  for: .editingChanged)
-        loginTextField.translatesAutoresizingMaskIntoConstraints = false
+        generalSettingsForTextFild(loginTextField)
         return loginTextField
     }()
 
     private lazy var passwordTextField: UITextField = {
         let passwordTextField = UITextField(frame: .zero)
-        passwordTextField.backgroundColor = .systemGray6
-        passwordTextField.layer.cornerRadius = 10
-        passwordTextField.layer.borderWidth = 0.5
-        passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
         passwordTextField.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        passwordTextField.font = UIFont(name: "regular", size: 16)
-        passwordTextField.textColor = .black
-        passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: passwordTextField.frame.height))
-        passwordTextField.leftViewMode = .always
         passwordTextField.isSecureTextEntry = true
         passwordTextField.placeholder = "Password"
-//        statusTextField.addTarget(self,
-//                                  action: #selector(statusTextChanged),
-//                                  for: .editingChanged)
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-
+        generalSettingsForTextFild(passwordTextField)
         return passwordTextField
     }()
 
@@ -76,10 +52,24 @@ class LogInScrollView: UIScrollView {
         return stackTextField
     }()
 
+    private lazy var logInButton: UIButton = {
+        var logInButton = UIButton(frame: .zero)
+        logInButton.setTitle("Log In", for: .normal)
+        logInButton.setTitleColor(.white, for: .normal)
+        logInButton.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+        logInButton.setBackgroundImage(UIImage(named: "blue_pixel")?.image(alpha: 0.8), for: .selected)
+        logInButton.setBackgroundImage(UIImage(named: "blue_pixel")?.image(alpha: 0.8), for: .highlighted)
+        logInButton.setBackgroundImage(UIImage(named: "blue_pixel")?.image(alpha: 0.8), for: .disabled)
+        logInButton.layer.cornerRadius = 10
+        logInButton.translatesAutoresizingMaskIntoConstraints = false
+        return logInButton
+    }()
+
     override func layoutSubviews() {
         addSubviews([
             logo,
-            stackTextField
+            stackTextField,
+            logInButton
         ])
         installingСonstraints()
     }
@@ -107,8 +97,34 @@ extension LogInScrollView {
             stackTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
             stackTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             stackTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            stackTextField.heightAnchor.constraint(equalToConstant: 100)
+            stackTextField.heightAnchor.constraint(equalToConstant: 100),
+            logInButton.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 16),
+            logInButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            logInButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+
+    private func generalSettingsForTextFild(_ textFild: UITextField) {
+        textFild.backgroundColor = .systemGray6
+        textFild.layer.cornerRadius = 10
+        textFild.layer.borderWidth = 0.5
+        textFild.layer.borderColor = UIColor.lightGray.cgColor
+        textFild.font = UIFont.systemFont(ofSize: 16)
+        textFild.textColor = .black
+        textFild.tintColor = UIColor(named: "ColorSet")
+        textFild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textFild.frame.height))
+        textFild.leftViewMode = .always
+        textFild.translatesAutoresizingMaskIntoConstraints = false
     }
 }
 
+extension UIImage {
+    func image(alpha: CGFloat) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(at: .zero, blendMode: .normal, alpha: alpha)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+}
