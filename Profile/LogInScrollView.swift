@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LogInScrollView: UIScrollView {
+class LogInScrollView: UIScrollView, UITextFieldDelegate {
 
     private lazy var logo: UIView = {
         let logo = UIView(frame: .zero)
@@ -28,6 +28,7 @@ class LogInScrollView: UIScrollView {
         loginTextField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         loginTextField.placeholder = "Email or phone"
         generalSettingsForTextFild(loginTextField)
+        loginTextField.delegate = self
         return loginTextField
     }()
 
@@ -37,6 +38,7 @@ class LogInScrollView: UIScrollView {
         passwordTextField.isSecureTextEntry = true
         passwordTextField.placeholder = "Password"
         generalSettingsForTextFild(passwordTextField)
+        passwordTextField.delegate = self
         return passwordTextField
     }()
 
@@ -72,6 +74,7 @@ class LogInScrollView: UIScrollView {
             logInButton
         ])
         installingСonstraints()
+        subscriptKeyboardEvents()
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -90,8 +93,8 @@ extension LogInScrollView {
 
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
-            logo.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 120),
-            logo.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            logo.topAnchor.constraint(equalTo: topAnchor, constant: 120),
+            logo.centerXAnchor.constraint(equalTo: centerXAnchor),
             logo.heightAnchor.constraint(equalToConstant: 100),
             logo.widthAnchor.constraint(equalToConstant: 100),
             stackTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
@@ -117,6 +120,27 @@ extension LogInScrollView {
         textFild.leftViewMode = .always
         textFild.translatesAutoresizingMaskIntoConstraints = false
     }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            endEditing(true)
+            return false
+        }
+
+    func subscriptKeyboardEvents() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+    }
+
+    @objc func keyBoardWillShow(_ notification: NSNotification) {
+        guard let ks = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        contentInset = UIEdgeInsets(top: 0, left: 0, bottom: ks.height - safeAreaInsets.bottom + 20, right: 0)
+    }
+
+    @objc func keyBoardWillHide(_ notification: NSNotification) {
+        contentOffset = CGPoint(x: 0, y: 0)
+    }
+
 }
 
 extension UIImage {

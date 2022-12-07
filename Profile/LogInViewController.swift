@@ -20,13 +20,23 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(scrollView)        
         installingСonstraints()
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1000)
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
-    
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            self.view.endEditing(true)
+            return false
+        }
 
 }
 
