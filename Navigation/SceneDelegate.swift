@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func createSecondController() -> UINavigationController {
-        let nvc = UINavigationController(rootViewController: ProfileViewController())
+        let nvc = UINavigationController(rootViewController: LogInViewController())
         nvc.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.fill"), tag: 1)
         return nvc
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD3119032940CAD900AC4315 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3119022940CAD900AC4315 /* LogInViewController.swift */; };
 		DD9FAEDD292F8B0F004ECA25 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9FAEDC292F8B0F004ECA25 /* FeedViewController.swift */; };
 		DD9FAEE1292F930F004ECA25 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9FAEE0292F930F004ECA25 /* PostViewController.swift */; };
 		DD9FAEE3292FFBA3004ECA25 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9FAEE2292FFBA3004ECA25 /* Post.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD3119022940CAD900AC4315 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		DD9FAEDC292F8B0F004ECA25 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		DD9FAEE0292F930F004ECA25 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		DD9FAEE2292FFBA3004ECA25 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				DDCD9B96293886630010CA3E /* ProfileViewController.swift */,
 				DDCD9B94293886210010CA3E /* ProfileHeaderView.swift */,
+				DD3119022940CAD900AC4315 /* LogInViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				DDB4CD76292CB1930064EDDF /* AppDelegate.swift in Sources */,
 				DD9FAEE3292FFBA3004ECA25 /* Post.swift in Sources */,
 				DD9FAEE529300600004ECA25 /* InfoViewController.swift in Sources */,
+				DD3119032940CAD900AC4315 /* LogInViewController.swift in Sources */,
 				DDB4CD78292CB1930064EDDF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
