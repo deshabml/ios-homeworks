@@ -11,7 +11,7 @@ class LogInViewController: UIViewController {
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = LogInScrollView()
-        scrollView.logInButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1000)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -21,23 +21,24 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(scrollView)        
         installingСonstraints()
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1000)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        logInButtonEvents()
         navigationController?.navigationBar.isHidden = true
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(scrollView)
         NotificationCenter.default.removeObserver(self)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            self.view.endEditing(true)
-            return false
-        }
+        self.view.endEditing(true)
+        return false
+    }
 
 }
 
@@ -52,8 +53,13 @@ extension LogInViewController {
         ])
     }
 
-    @objc func buttonAction() {
+    private func logInButtonEvents() {
+        NotificationCenter.default.addObserver(self, selector: #selector(buttonActionLogIn), name: Notification.Name("Button Log In up"), object: nil)
+    }
+
+    @objc func buttonActionLogIn() {
         let pvc = ProfileViewController()
         navigationController?.pushViewController(pvc, animated: true)
     }
+
 }
