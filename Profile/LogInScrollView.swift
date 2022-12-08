@@ -64,6 +64,7 @@ class LogInScrollView: UIScrollView, UITextFieldDelegate {
         logInButton.setBackgroundImage(UIImage(named: "blue_pixel")?.image(alpha: 0.8), for: .disabled)
         logInButton.layer.cornerRadius = 10
         logInButton.translatesAutoresizingMaskIntoConstraints = false
+        logInButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return logInButton
     }()
 
@@ -122,11 +123,11 @@ extension LogInScrollView {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            endEditing(true)
-            return false
-        }
+        endEditing(true)
+        return false
+    }
 
-    func subscriptKeyboardEvents() {
+    private func subscriptKeyboardEvents() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
@@ -139,6 +140,10 @@ extension LogInScrollView {
 
     @objc func keyBoardWillHide(_ notification: NSNotification) {
         contentOffset = CGPoint(x: 0, y: 0)
+    }
+
+    @objc func buttonAction() {
+        NotificationCenter.default.post(name: Notification.Name("Button Log In up"), object: nil)
     }
 
 }

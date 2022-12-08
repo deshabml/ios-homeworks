@@ -11,11 +11,6 @@ class PostViewController: UIViewController {
 
     lazy var post: Post = Post(title: "")
 
-    @objc func buttonAction() {
-        let ivc = InfoViewController()
-        present(ivc, animated: true)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
@@ -23,4 +18,10 @@ class PostViewController: UIViewController {
         let myButten = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(buttonAction))
         navigationItem.rightBarButtonItem = myButten
     }
+
+    @objc func buttonAction() {
+        let ivc = InfoViewController()
+        present(ivc, animated: true)
+    }
+    
 }

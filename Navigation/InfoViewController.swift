@@ -24,18 +24,6 @@ class InfoViewController: UIViewController {
         return button
     }()
 
-    @objc func buttonAction(_ sender: UIButton) {
-        let avc = UIAlertController(title: "Новость века!", message: "По секрету, \n всему свету!", preferredStyle: .alert)
-        avc.addAction(UIAlertAction(title: "Отмена", style: .cancel){ _ in
-            print("Сообщение")
-            avc.dismiss(animated: true)
-        })
-        avc.addAction(UIAlertAction(title: "Cообщение", style: .default){ _ in
-            print("Сообщение")
-        })
-        present(avc, animated: true)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(
@@ -49,9 +37,22 @@ class InfoViewController: UIViewController {
         button.center.x = view.center.x
         view.addSubview(button)
     }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         button.center.x = view.center.x
+    }
+
+    @objc func buttonAction(_ sender: UIButton) {
+        let avc = UIAlertController(title: "Новость века!", message: "По секрету, \n всему свету!", preferredStyle: .alert)
+        avc.addAction(UIAlertAction(title: "Отмена", style: .cancel){ _ in
+            print("Сообщение")
+            avc.dismiss(animated: true)
+        })
+        avc.addAction(UIAlertAction(title: "Cообщение", style: .default){ _ in
+            print("Сообщение")
+        })
+        present(avc, animated: true)
     }
 
 }
