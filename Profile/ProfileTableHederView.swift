@@ -142,5 +142,5 @@ extension ProfileHeaderView {
             setStatusButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
-    
+
 }
