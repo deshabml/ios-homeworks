@@ -23,24 +23,27 @@ class PostTableViewCell: UITableViewCell {
         return author
     }()
 
-    private lazy var ImageView: UIView = {
-        var ImageView = UIView(frame: .zero)
-//        ImageView.layer.cornerRadius = ImageView.frame.size.width / 2
-//        ImageView.clipsToBounds = true
-//        ImageView.layer.borderColor = UIColor.white.cgColor
-//        ImageView.layer.borderWidth = 3
-        ImageView.backgroundColor = .black
-        let myLayer = CALayer()
-        let myImage = UIImage(named: image)?.cgImage
-        myLayer.frame = CGRect(x: 50,
-                               y: 50,
-                               width: 300,
-                               height: 300)
-        myLayer.contents = myImage
-        ImageView.layer.addSublayer(myLayer)
-        ImageView.translatesAutoresizingMaskIntoConstraints = false
-        return ImageView
+    lazy var postImageView: UIImageView = {
+        let postImageView = UIImageView(image: UIImage(named: image))
+        postImageView.frame = frame
+        postImageView.contentMode = .scaleAspectFit
+        postImageView.backgroundColor = .black
+        postImageView.translatesAutoresizingMaskIntoConstraints = false
+        return postImageView
     }()
+
+    lazy var descriptionText: UITextView = {
+        let descriptionText = UITextView(frame: .zero)
+
+        descriptionText.text = "dsfsdgfdsfgdfgdfffhdfghdfgh"
+        descriptionText.sizeToFit()
+        descriptionText.backgroundColor = .red
+        descriptionText.translatesAutoresizingMaskIntoConstraints = false
+        return descriptionText
+    }()
+
+
+
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,25 +51,33 @@ class PostTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        addSubview(author)
-        addSubview(ImageView)
-
+        addSubviews([author, postImageView, descriptionText])
         installingСonstraints()
-
     }
 
 }
 
 extension PostTableViewCell {
+
+    private func addSubviews(_ arrayView: [UIView]) {
+        arrayView.forEach {
+            addSubview($0)
+        }
+    }
+
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
             author.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             author.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            ImageView.topAnchor.constraint(equalTo: author.bottomAnchor, constant: 16),
-            ImageView.heightAnchor.constraint(equalTo: widthAnchor),
-            ImageView.widthAnchor.constraint(equalTo: widthAnchor),
-            ImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            ImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            postImageView.topAnchor.constraint(equalTo: author.bottomAnchor, constant: 16),
+            postImageView.heightAnchor.constraint(equalTo: widthAnchor),
+            postImageView.widthAnchor.constraint(equalTo: widthAnchor),
+            postImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            descriptionText.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
+            descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            descriptionText.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+
         ])
     }
     

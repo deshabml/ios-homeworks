@@ -70,6 +70,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
         cell.author.text = dataSource[indexPath.item].author
         cell.image = dataSource[indexPath.item].image
+        cell.descriptionText.text = dataSource[indexPath.item].description
         return cell
     }
 
