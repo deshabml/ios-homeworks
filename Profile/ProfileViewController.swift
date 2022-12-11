@@ -71,6 +71,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         cell.image = dataSource[indexPath.item].image
         cell.descriptionText.text = dataSource[indexPath.item].description
         cell.likes.text = "Likes: \(dataSource[indexPath.item].likes)"
+        cell.views.text = "Views: \(dataSource[indexPath.item].views)"
         return cell
     }
 

@@ -50,13 +50,22 @@ class PostTableViewCell: UITableViewCell {
         return likes
     }()
 
+    lazy var views: UILabel = {
+        let views = UILabel()
+        views.textColor = .black
+        views.font = UIFont.systemFont(ofSize: 16)
+        views.numberOfLines = 0
+        views.translatesAutoresizingMaskIntoConstraints = false
+        return views
+    }()
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        addSubviews([author, postImageView, descriptionText, likes])
+        addSubviews([author, postImageView, descriptionText, likes, views])
         installingСonstraints()
     }
 
@@ -83,7 +92,9 @@ extension PostTableViewCell {
             descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             likes.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
             likes.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            likes.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+            likes.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            views.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
+            views.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     
