@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    private var dataSource: [Post] = posts
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -19,8 +21,10 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .lightGray
-//        titleSetting()
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
+        tableView.register(ProfileTableHederView.self, forHeaderFooterViewReuseIdentifier: ProfileTableHederView.id)
         addSubviews([
             tableView
             ])
@@ -28,13 +32,9 @@ class ProfileViewController: UIViewController {
 
     }
 
-//    @objc func changeTheTitle() {
-//        title = "Profile new"
-//    }
-//
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.view.endEditing(true)
-//    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
 }
 
@@ -45,14 +45,6 @@ extension ProfileViewController {
             view.addSubview($0)
         }
     }
-
-//    private func titleSetting () {
-//        title = "Profile"
-//        let novigationBarColor = UINavigationBarAppearance()
-//        novigationBarColor.titleTextAttributes = [.foregroundColor: UIColor.black]
-//        novigationBarColor.backgroundColor = .white
-//        navigationItem.scrollEdgeAppearance = novigationBarColor
-//    }
 
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
@@ -66,13 +58,19 @@ extension ProfileViewController {
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHederView.id)
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         posts.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
+        cell.author.text = dataSource[indexPath.item].author
+        cell.image = dataSource[indexPath.item].image
+        return cell
     }
-
 
 }

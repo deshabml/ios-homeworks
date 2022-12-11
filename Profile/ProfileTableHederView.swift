@@ -7,6 +7,28 @@
 
 import UIKit
 
+class ProfileTableHederView: UITableViewHeaderFooterView {
+
+    static let id = "ProfileTableHederView"
+
+    private lazy var viewHeader: UIView = {
+        let viewHeader = ProfileHeaderView()
+        viewHeader.translatesAutoresizingMaskIntoConstraints = false
+        return viewHeader
+    }()
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(viewHeader)
+        installingСonstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
 class ProfileHeaderView: UIView {
 
     private lazy var statusText: String = "Waiting for something..."
@@ -87,6 +109,7 @@ class ProfileHeaderView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        backgroundColor = .lightGray
         addSubviews([
             fullNameLabel,
             statusLabel,
@@ -140,6 +163,20 @@ extension ProfileHeaderView {
             setStatusButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             setStatusButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+
+}
+
+extension ProfileTableHederView {
+
+    private func installingСonstraints() {
+        NSLayoutConstraint.activate([
+            viewHeader.heightAnchor.constraint(equalToConstant: 240),
+            viewHeader.topAnchor.constraint(equalTo: contentView.topAnchor),
+            viewHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            viewHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            viewHeader.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 

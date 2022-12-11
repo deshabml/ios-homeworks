@@ -11,6 +11,7 @@
 		DD3119052940D3B300AC4315 /* LogInScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3119042940D3B300AC4315 /* LogInScrollView.swift */; };
 		DD3191DA29452B5A005B169F /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3191D929452B5A005B169F /* ProfileTableHederView.swift */; };
 		DD3191DC29452D63005B169F /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3191DB29452D63005B169F /* Posts.swift */; };
+		DD3191DE29453ED8005B169F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3191DD29453ED8005B169F /* PostTableViewCell.swift */; };
 		DD9FAEDD292F8B0F004ECA25 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9FAEDC292F8B0F004ECA25 /* FeedViewController.swift */; };
 		DD9FAEE1292F930F004ECA25 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9FAEE0292F930F004ECA25 /* PostViewController.swift */; };
 		DD9FAEE3292FFBA3004ECA25 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9FAEE2292FFBA3004ECA25 /* Post.swift */; };
@@ -28,6 +29,7 @@
 		DD3119042940D3B300AC4315 /* LogInScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInScrollView.swift; sourceTree = "<group>"; };
 		DD3191D929452B5A005B169F /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		DD3191DB29452D63005B169F /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
+		DD3191DD29453ED8005B169F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		DD9FAEDC292F8B0F004ECA25 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		DD9FAEE0292F930F004ECA25 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		DD9FAEE2292FFBA3004ECA25 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				DDCD9B96293886630010CA3E /* ProfileViewController.swift */,
 				DD3191D929452B5A005B169F /* ProfileTableHederView.swift */,
+				DD3191DD29453ED8005B169F /* PostTableViewCell.swift */,
 				DD3119022940CAD900AC4315 /* LogInViewController.swift */,
 				DD3119042940D3B300AC4315 /* LogInScrollView.swift */,
 				DD3191DB29452D63005B169F /* Posts.swift */,
@@ -171,6 +174,7 @@
 			files = (
 				DD9FAEE1292F930F004ECA25 /* PostViewController.swift in Sources */,
 				DDCD9B97293886630010CA3E /* ProfileViewController.swift in Sources */,
+				DD3191DE29453ED8005B169F /* PostTableViewCell.swift in Sources */,
 				DDB4CD7A292CB1930064EDDF /* ViewController.swift in Sources */,
 				DD3119052940D3B300AC4315 /* LogInScrollView.swift in Sources */,
 				DD9FAEDD292F8B0F004ECA25 /* FeedViewController.swift in Sources */,
