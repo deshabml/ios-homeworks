@@ -32,18 +32,14 @@ class PostTableViewCell: UITableViewCell {
         return postImageView
     }()
 
-    lazy var descriptionText: UITextView = {
-        let descriptionText = UITextView(frame: .zero)
-
-        descriptionText.text = "dsfsdgfdsfgdfgdfffhdfghdfgh"
-        descriptionText.sizeToFit()
-        descriptionText.backgroundColor = .red
+    lazy var descriptionText: UILabel = {
+        let descriptionText = UILabel()
+        descriptionText.textColor = .systemGray
+        descriptionText.font = UIFont.systemFont(ofSize: 14)
+        descriptionText.numberOfLines = 0
         descriptionText.translatesAutoresizingMaskIntoConstraints = false
         return descriptionText
     }()
-
-
-
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -77,7 +73,6 @@ extension PostTableViewCell {
             descriptionText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             descriptionText.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
-
         ])
     }
     

@@ -109,7 +109,11 @@ class ProfileHeaderView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundColor = .lightGray
+        backgroundColor = UIColor(
+            red: 242/255,
+            green: 242/255,
+            blue: 247/255,
+            alpha: 1.0)
         addSubviews([
             fullNameLabel,
             statusLabel,

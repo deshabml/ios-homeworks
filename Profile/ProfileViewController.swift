@@ -17,10 +17,9 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
 
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         self.tableView.dataSource = self
         self.tableView.delegate = self
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
