@@ -2,34 +2,14 @@
 //  ProfileHeaderView.swift
 //  Navigation
 //
-//  Created by Лаборатория on 01.12.2022.
+//  Created by Лаборатория on 11.12.2022.
 //
 
 import UIKit
 
-class ProfileTableHederView: UITableViewHeaderFooterView {
+class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
 
-    static let id = "ProfileTableHederView"
-
-    private lazy var viewHeader: UIView = {
-        let viewHeader = ProfileHeaderView()
-        viewHeader.translatesAutoresizingMaskIntoConstraints = false
-        return viewHeader
-    }()
-
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(viewHeader)
-        installingСonstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-class ProfileHeaderView: UIView {
+    static let id = "ProfileHeaderView"
 
     private lazy var statusText: String = "Waiting for something..."
 
@@ -46,7 +26,7 @@ class ProfileHeaderView: UIView {
         let statusLabel = UILabel(frame: .zero)
         statusLabel.text = "Waiting for something..."
         statusLabel.font = UIFont(name: "regular", size: 14)
-        statusLabel.textColor = .gray
+        statusLabel.textColor = .black
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         return statusLabel
 
@@ -103,6 +83,7 @@ class ProfileHeaderView: UIView {
         statusTextField.addTarget(self,
                                   action: #selector(statusTextChanged),
                                   for: .editingChanged)
+        statusTextField.delegate = self
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         return statusTextField
     }()
@@ -149,38 +130,31 @@ extension ProfileHeaderView {
         }
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        endEditing(true)
+        return false
+    }
+
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
-            fullNameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
+            fullNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 40 ),
-            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10),
             statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusTextField.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             avatarImageView.widthAnchor.constraint(equalToConstant: 130),
             avatarImageView.heightAnchor.constraint(equalToConstant: 130),
-            avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 40 ),
+            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            setStatusButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            setStatusButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-
-}
-
-extension ProfileTableHederView {
-
-    private func installingСonstraints() {
-        NSLayoutConstraint.activate([
-            viewHeader.heightAnchor.constraint(equalToConstant: 240),
-            viewHeader.topAnchor.constraint(equalTo: contentView.topAnchor),
-            viewHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            viewHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            viewHeader.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            setStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
     }
 

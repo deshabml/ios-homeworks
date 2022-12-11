@@ -23,10 +23,8 @@ class ProfileViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
-        tableView.register(ProfileTableHederView.self, forHeaderFooterViewReuseIdentifier: ProfileTableHederView.id)
-        addSubviews([
-            tableView
-            ])
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileHeaderView.id)
+        view.addSubview(tableView)
         installingСonstraints()
 
     }
@@ -38,12 +36,6 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController {
-
-    private func addSubviews(_ arrayView: [UIView]) {
-        arrayView.forEach {
-            view.addSubview($0)
-        }
-    }
 
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
@@ -58,11 +50,19 @@ extension ProfileViewController {
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHederView.id)
+        tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.id)
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        240
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         posts.count
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

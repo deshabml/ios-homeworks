@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		DD3119032940CAD900AC4315 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3119022940CAD900AC4315 /* LogInViewController.swift */; };
 		DD3119052940D3B300AC4315 /* LogInScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3119042940D3B300AC4315 /* LogInScrollView.swift */; };
-		DD3191DA29452B5A005B169F /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3191D929452B5A005B169F /* ProfileTableHederView.swift */; };
 		DD3191DC29452D63005B169F /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3191DB29452D63005B169F /* Posts.swift */; };
 		DD3191DE29453ED8005B169F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3191DD29453ED8005B169F /* PostTableViewCell.swift */; };
 		DD9FAEDD292F8B0F004ECA25 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9FAEDC292F8B0F004ECA25 /* FeedViewController.swift */; };
@@ -21,13 +20,13 @@
 		DDB4CD7A292CB1930064EDDF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4CD79292CB1930064EDDF /* ViewController.swift */; };
 		DDB4CD7F292CB1940064EDDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD7E292CB1940064EDDF /* Assets.xcassets */; };
 		DDB4CD82292CB1940064EDDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD80292CB1940064EDDF /* LaunchScreen.storyboard */; };
+		DDB84C6729467A21005E37A4 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB84C6629467A21005E37A4 /* ProfileHeaderView.swift */; };
 		DDCD9B97293886630010CA3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCD9B96293886630010CA3E /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DD3119022940CAD900AC4315 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		DD3119042940D3B300AC4315 /* LogInScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInScrollView.swift; sourceTree = "<group>"; };
-		DD3191D929452B5A005B169F /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		DD3191DB29452D63005B169F /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		DD3191DD29453ED8005B169F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		DD9FAEDC292F8B0F004ECA25 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -41,6 +40,7 @@
 		DDB4CD7E292CB1940064EDDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDB4CD81292CB1940064EDDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DDB4CD83292CB1940064EDDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDB84C6629467A21005E37A4 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		DDCD9B96293886630010CA3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,7 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				DDCD9B96293886630010CA3E /* ProfileViewController.swift */,
-				DD3191D929452B5A005B169F /* ProfileTableHederView.swift */,
+				DDB84C6629467A21005E37A4 /* ProfileHeaderView.swift */,
 				DD3191DD29453ED8005B169F /* PostTableViewCell.swift */,
 				DD3119022940CAD900AC4315 /* LogInViewController.swift */,
 				DD3119042940D3B300AC4315 /* LogInScrollView.swift */,
@@ -183,7 +183,7 @@
 				DD3191DC29452D63005B169F /* Posts.swift in Sources */,
 				DD9FAEE529300600004ECA25 /* InfoViewController.swift in Sources */,
 				DD3119032940CAD900AC4315 /* LogInViewController.swift in Sources */,
-				DD3191DA29452B5A005B169F /* ProfileTableHederView.swift in Sources */,
+				DDB84C6729467A21005E37A4 /* ProfileHeaderView.swift in Sources */,
 				DDB4CD78292CB1930064EDDF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
