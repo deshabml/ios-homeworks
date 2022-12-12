@@ -91,11 +91,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         super.layoutSubviews()
-        backgroundColor = UIColor(
+        contentView.backgroundColor = UIColor(
             red: 242/255,
             green: 242/255,
             blue: 247/255,
-            alpha: 1.0)
+            alpha: 0.6)
         addSubviews([
             fullNameLabel,
             statusLabel,
