@@ -50,11 +50,8 @@ extension ProfileViewController {
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.id)
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        240
+        guard section == 0 else { return nil }
+            return tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.id)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

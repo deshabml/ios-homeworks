@@ -88,7 +88,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return statusTextField
     }()
 
-    override func layoutSubviews() {
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         super.layoutSubviews()
         backgroundColor = UIColor(
             red: 242/255,
@@ -103,6 +104,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             setStatusButton
         ])
         installingСonstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     @objc func buttonPressed() {
