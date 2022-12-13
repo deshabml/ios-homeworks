@@ -65,7 +65,7 @@ class PostTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        addSubviews([author, postImageView, descriptionText, likes, views])
+        addSubviews(self, [author, postImageView, descriptionText, likes, views])
         installingСonstraints()
     }
 
@@ -73,11 +73,6 @@ class PostTableViewCell: UITableViewCell {
 
 extension PostTableViewCell {
 
-    private func addSubviews(_ arrayView: [UIView]) {
-        arrayView.forEach {
-            addSubview($0)
-        }
-    }
 
     private func installingСonstraints() {
         NSLayoutConstraint.activate([

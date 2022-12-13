@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
+class ProfileHeaderView: UIView {
 
     static let id = "ProfileHeaderView"
 
@@ -26,7 +26,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         let statusLabel = UILabel(frame: .zero)
         statusLabel.text = "Waiting for something..."
         statusLabel.font = UIFont(name: "regular", size: 14)
-        statusLabel.textColor = .black
+        statusLabel.textColor = .gray
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         return statusLabel
 
@@ -49,23 +49,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return setStatusButton
     }()
 
-    private lazy var avatarImageView: UIView = {
-        var avatarImageView = UIView(frame: CGRect(x: 0,
-                                                   y: 0,
-                                                   width: 130,
-                                                   height: 130))
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
+    lazy var avatarImageView: UIImageView = {
+        let avatarImageView = UIImageView(image: UIImage(named: "The_Cat"))
+        avatarImageView.layer.cornerRadius = 65
         avatarImageView.clipsToBounds = true
         avatarImageView.layer.borderColor = UIColor.white.cgColor
         avatarImageView.layer.borderWidth = 3
-        let myLayer = CALayer()
-        let myImage = UIImage(named: "The_Cat")?.cgImage
-        myLayer.frame = CGRect(x: 0,
-                               y: 0,
-                               width: 130,
-                               height: 130)
-        myLayer.contents = myImage
-        avatarImageView.layer.addSublayer(myLayer)
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
@@ -83,31 +72,33 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         statusTextField.addTarget(self,
                                   action: #selector(statusTextChanged),
                                   for: .editingChanged)
-        statusTextField.delegate = self
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         return statusTextField
     }()
 
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        super.layoutSubviews()
-        contentView.backgroundColor = UIColor(
-            red: 242/255,
-            green: 242/255,
-            blue: 247/255,
-            alpha: 0.6)
-        addSubviews([
-            fullNameLabel,
-            statusLabel,
-            statusTextField,
-            avatarImageView,
-            setStatusButton
-        ])
-        installingСonstraints()
-    }
-    
+        override init(frame: CGRect) {
+            super.init(frame: .zero)
+                  self.backgroundColor = UIColor(
+                      red: 242/255,
+                      green: 242/255,
+                      blue: 247/255,
+                      alpha: 0.6)
+            Navigation.addSubviews(self, [
+                      fullNameLabel,
+                      statusLabel,
+                      statusTextField,
+                      avatarImageView,
+                      setStatusButton
+                  ])
+                  installingСonstraints()
+        }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
 
     @objc func buttonPressed() {
@@ -133,11 +124,6 @@ extension ProfileHeaderView {
         arrayView.forEach {
             addSubview($0)
         }
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        endEditing(true)
-        return false
     }
 
     private func installingСonstraints() {
