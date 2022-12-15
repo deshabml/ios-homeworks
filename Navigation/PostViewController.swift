@@ -9,12 +9,12 @@ import UIKit
 
 class PostViewController: UIViewController {
 
-    lazy var post: Post = Post(title: "")
+    lazy var postOne: PostOne = PostOne(title: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
-        title = post.title
+        title = postOne.title
         let myButten = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(buttonAction))
         navigationItem.rightBarButtonItem = myButten
     }

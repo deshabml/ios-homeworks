@@ -12,15 +12,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func createFirstController() -> UINavigationController {
-        let nvc = UINavigationController(rootViewController: FeedViewController())
-        nvc.tabBarItem = UITabBarItem(title: "Лента пользователя", image: UIImage(systemName: "lineweight"), tag: 0)
-        return nvc
+        let fvc = UINavigationController(rootViewController: FeedViewController())
+        fvc.tabBarItem = UITabBarItem(title: "Лента пользователя", image: UIImage(systemName: "lineweight"), tag: 0)
+        return fvc
     }
 
     func createSecondController() -> UINavigationController {
-        let nvc = UINavigationController(rootViewController: LogInViewController())
-        nvc.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.fill"), tag: 1)
-        return nvc
+        let lvc = UINavigationController(rootViewController: LogInViewController())
+        lvc.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.fill"), tag: 1)
+        return lvc
     }
 
     func creatTabBar() -> UITabBarController {
