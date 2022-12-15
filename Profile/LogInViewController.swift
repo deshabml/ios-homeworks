@@ -57,10 +57,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         var logInButton = UIButton(frame: .zero)
         logInButton.setTitle("Log In", for: .normal)
         logInButton.setTitleColor(.white, for: .normal)
-        logInButton.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
-        logInButton.setBackgroundImage(UIImage(named: "blue_pixel")?.image(alpha: 0.8), for: .selected)
-        logInButton.setBackgroundImage(UIImage(named: "blue_pixel")?.image(alpha: 0.8), for: .highlighted)
-        logInButton.setBackgroundImage(UIImage(named: "blue_pixel")?.image(alpha: 0.8), for: .disabled)
+        if let imageButtonColor = UIImage(named: "blue_pixel") {
+            logInButton.setBackgroundImage(imageButtonColor, for: .normal)
+            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .selected)
+            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .highlighted)
+            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .disabled)
+        } else {
+            logInButton.backgroundColor = .systemBlue
+        }
         logInButton.layer.cornerRadius = 10
         logInButton.translatesAutoresizingMaskIntoConstraints = false
         logInButton.addTarget(self, action: #selector(buttonActionLogIn), for: .touchUpInside)
@@ -71,7 +75,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(scrollView)
-        addSubviews(scrollView, [
+        scrollView.addSubviews([
             logo,
             stackTextField,
             logInButton

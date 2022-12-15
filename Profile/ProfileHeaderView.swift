@@ -83,7 +83,7 @@ class ProfileHeaderView: UIView {
                       green: 242/255,
                       blue: 247/255,
                       alpha: 0.6)
-            Navigation.addSubviews(self, [
+            addSubviews([
                       fullNameLabel,
                       statusLabel,
                       statusTextField,
@@ -119,12 +119,6 @@ class ProfileHeaderView: UIView {
 }
 
 extension ProfileHeaderView {
-
-    private func addSubviews(_ arrayView: [UIView]) {
-        arrayView.forEach {
-            addSubview($0)
-        }
-    }
 
     private func installingСonstraints() {
         NSLayoutConstraint.activate([

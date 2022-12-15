@@ -7,8 +7,10 @@
 
 import UIKit
 
-func addSubviews(_ viewClass: UIView,_ arrayView: [UIView]) {
-    arrayView.forEach {
-        viewClass.addSubview($0)
+extension UIView {
+    func addSubviews(_ arrayView: [UIView]) {
+        arrayView.forEach {
+            self.addSubview($0)
+        }
     }
 }

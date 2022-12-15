@@ -65,7 +65,7 @@ class PostTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        addSubviews(self, [author, postImageView, descriptionText, likes, views])
+        addSubviews([author, postImageView, descriptionText, likes, views])
         installingСonstraints()
     }
 
