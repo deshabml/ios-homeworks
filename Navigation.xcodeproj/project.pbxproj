@@ -20,6 +20,7 @@
 		DDB4CD7F292CB1940064EDDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD7E292CB1940064EDDF /* Assets.xcassets */; };
 		DDB4CD82292CB1940064EDDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDB4CD80292CB1940064EDDF /* LaunchScreen.storyboard */; };
 		DDB4FF8F294E1E3400C3F867 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4FF8E294E1E3400C3F867 /* PhotosTableViewCell.swift */; };
+		DDB4FF91294E557000C3F867 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4FF90294E557000C3F867 /* PhotosViewController.swift */; };
 		DDB84C6729467A21005E37A4 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB84C6629467A21005E37A4 /* ProfileHeaderView.swift */; };
 		DDC98A4C2948FAC500A38903 /* AddSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC98A4B2948FAC500A38903 /* AddSubviews.swift */; };
 		DDCD9B97293886630010CA3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCD9B96293886630010CA3E /* ProfileViewController.swift */; };
@@ -41,6 +42,7 @@
 		DDB4CD81292CB1940064EDDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DDB4CD83292CB1940064EDDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDB4FF8E294E1E3400C3F867 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		DDB4FF90294E557000C3F867 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		DDB84C6629467A21005E37A4 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		DDC98A4B2948FAC500A38903 /* AddSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubviews.swift; sourceTree = "<group>"; };
 		DDCD9B96293886630010CA3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				DDB84C6629467A21005E37A4 /* ProfileHeaderView.swift */,
 				DD3191DD29453ED8005B169F /* PostTableViewCell.swift */,
 				DDB4FF8E294E1E3400C3F867 /* PhotosTableViewCell.swift */,
+				DDB4FF90294E557000C3F867 /* PhotosViewController.swift */,
 				DD3119022940CAD900AC4315 /* LogInViewController.swift */,
 				DD3191DB29452D63005B169F /* Posts.swift */,
 				DDC98A4B2948FAC500A38903 /* AddSubviews.swift */,
@@ -184,6 +187,7 @@
 				DD9FAEE3292FFBA3004ECA25 /* Post.swift in Sources */,
 				DD3191DC29452D63005B169F /* Posts.swift in Sources */,
 				DDB4FF8F294E1E3400C3F867 /* PhotosTableViewCell.swift in Sources */,
+				DDB4FF91294E557000C3F867 /* PhotosViewController.swift in Sources */,
 				DD9FAEE529300600004ECA25 /* InfoViewController.swift in Sources */,
 				DD3119032940CAD900AC4315 /* LogInViewController.swift in Sources */,
 				DDB84C6729467A21005E37A4 /* ProfileHeaderView.swift in Sources */,

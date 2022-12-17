@@ -27,7 +27,6 @@ class ProfileViewController: UIViewController {
         view.addSubview(tableView)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
         installingСonstraints()
-        self.autoHideTheKeyboard(tableView)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -55,12 +54,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         guard section == 0 else { return nil }
             return ProfileHeaderView()
     }
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        100
-//    }
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 24
-//        }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         2
@@ -76,6 +69,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 0 {
+            //        navigationController?.navigationBar.isHidden = false
+
+            let pvc = PhotosViewController()
+            //        vc.text = dataSource[indexPath.item].firstTitle
+            navigationController?.pushViewController(pvc, animated: true)
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,7 +89,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             cell.descriptionText.text = dataSource[indexPath.item].description
             cell.likes.text = "Likes: \(dataSource[indexPath.item].likes)"
             cell.views.text = "Views: \(dataSource[indexPath.item].views)"
-        print(indexPath.item)
             return cell
         }
     }
