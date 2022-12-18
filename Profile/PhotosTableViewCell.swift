@@ -28,25 +28,25 @@ class PhotosTableViewCell: UITableViewCell {
     }()
 
     lazy var imageOne: UIImageView = {
-        let imageOne = UIImageView(image: UIImage(named: "photo_01"))
+        let imageOne = UIImageView(image: UIImage(named: photos[1]))
         imageSettings(imageOne)
         return imageOne
     }()
 
     lazy var imageTwo: UIImageView = {
-        let imageTwo = UIImageView(image: UIImage(named: "photo_02"))
+        let imageTwo = UIImageView(image: UIImage(named: photos[2]))
         imageSettings(imageTwo)
         return imageTwo
     }()
 
     lazy var imageThree: UIImageView = {
-        let imageThree = UIImageView(image: UIImage(named: "photo_03"))
+        let imageThree = UIImageView(image: UIImage(named: photos[3]))
         imageSettings(imageThree)
         return imageThree
     }()
 
     lazy var imageFour: UIImageView = {
-        let imageFour = UIImageView(image: UIImage(named: "photo_04"))
+        let imageFour = UIImageView(image: UIImage(named: photos[4]))
         imageSettings(imageFour)
         return imageFour
     }()

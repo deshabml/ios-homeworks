@@ -52,7 +52,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
-            return ProfileHeaderView()
+        return ProfileHeaderView()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,10 +70,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
-            //        navigationController?.navigationBar.isHidden = false
-
             let pvc = PhotosViewController()
-            //        vc.text = dataSource[indexPath.item].firstTitle
             navigationController?.pushViewController(pvc, animated: true)
         }
     }
