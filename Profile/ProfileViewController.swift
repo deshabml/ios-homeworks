@@ -20,12 +20,13 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.sectionHeaderTopPadding = 0.2
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
         view.addSubview(tableView)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
         installingСonstraints()
-        self.autoHideTheKeyboard(tableView)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -51,25 +52,42 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
-            return ProfileHeaderView()
+        return ProfileHeaderView()
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        posts.count
+        if section == 0 {
+            return 1
+        } else {
+            return posts.count
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 0 {
+            let pvc = PhotosViewController()
+            navigationController?.pushViewController(pvc, animated: true)
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
-        cell.author.text = dataSource[indexPath.item].author
-        cell.image = dataSource[indexPath.item].image
-        cell.descriptionText.text = dataSource[indexPath.item].description
-        cell.likes.text = "Likes: \(dataSource[indexPath.item].likes)"
-        cell.views.text = "Views: \(dataSource[indexPath.item].views)"
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.id, for: indexPath) as! PhotosTableViewCell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
+            cell.author.text = dataSource[indexPath.item].author
+            cell.image = dataSource[indexPath.item].image
+            cell.descriptionText.text = dataSource[indexPath.item].description
+            cell.likes.text = "Likes: \(dataSource[indexPath.item].likes)"
+            cell.views.text = "Views: \(dataSource[indexPath.item].views)"
+            return cell
+        }
     }
 
 }
