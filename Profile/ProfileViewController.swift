@@ -17,6 +17,14 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    private lazy var phv: UIView = {
+        let phv = ProfileHeaderView()
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
+        phv.avatarImageView.isUserInteractionEnabled = true
+        phv.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
+        return phv
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -26,6 +34,8 @@ class ProfileViewController: UIViewController {
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
         view.addSubview(tableView)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
+//        ProfileHeaderView.ima
+        
         installingСonstraints()
     }
 
@@ -52,7 +62,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
-        return ProfileHeaderView()
+        return phv
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,6 +98,42 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             cell.views.text = "Views: \(dataSource[indexPath.item].views)"
             return cell
         }
+    }
+
+    @objc func onTap(_ tapRecognizer: UITapGestureRecognizer) {
+        let backView = UIView()
+        view.addSubview(backView)
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        backView.backgroundColor = UIColor(white: 1, alpha: 0)
+        backView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        backView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        backView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        backView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        let avatarImageView = ProfileHeaderView().avatarImageView
+        view.addSubview(avatarImageView)
+        var avatarImageViewTopAnchor = avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        var avatarImageViewleadingAnchor = avatarImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+        avatarImageViewTopAnchor.isActive = true
+        avatarImageViewleadingAnchor.isActive = true
+//        phv.avatarImageView.backgroundColor = .white
+        view.layoutIfNeeded()
+        avatarImageViewTopAnchor.isActive = false
+        avatarImageViewleadingAnchor.isActive = false
+        avatarImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        avatarImageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        avatarImageView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        avatarImageView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            backView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+            self.view.layoutIfNeeded()
+            avatarImageView.layer.cornerRadius = 0
+        })
+//        UIView.animate(withDuration: 0.3, delay: 0, animations: {
+//            backView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+//            self.view.layoutIfNeeded()
+//            avatarImageView.layer.cornerRadius = 0
+//        })
+
     }
 
 }
