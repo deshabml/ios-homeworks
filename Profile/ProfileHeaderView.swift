@@ -55,9 +55,6 @@ class ProfileHeaderView: UIView {
         avatarImageView.clipsToBounds = true
         avatarImageView.layer.borderColor = UIColor.white.cgColor
         avatarImageView.layer.borderWidth = 3
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
-//        avatarImageView.isUserInteractionEnabled = true
-//        avatarImageView.addGestureRecognizer(tapGestureRecognizer)
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
@@ -117,25 +114,6 @@ class ProfileHeaderView: UIView {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         endEditing(true)
-    }
-
-    @objc func onTap(_ tapRecognizer: UITapGestureRecognizer) {
-        print("ap op")
-        
-
-
-        avatarImageView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-        avatarImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor).isActive = true
-        avatarImageView.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        avatarImageView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-
-
-        UIView.animate(withDuration: 0.5, delay: 0, animations: {
-            self.layoutIfNeeded()
-            self.avatarImageView.layer.cornerRadius = 0
-
-        })
-
     }
 
 }
