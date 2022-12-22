@@ -17,11 +17,29 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    lazy var avatarImageView: UIImageView = {
+        let avatarImageView = UIImageView(image: UIImage(named: "The_Cat"))
+        avatarImageView.layer.cornerRadius = 65
+        avatarImageView.clipsToBounds = true
+        avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.borderWidth = 3
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        return avatarImageView
+    }()
+
     private lazy var phv: UIView = {
         let phv = ProfileHeaderView()
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTap))
-        phv.avatarImageView.isUserInteractionEnabled = true
-        phv.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
+        phv.addSubview(avatarImageView)
+        avatarImageViewTopAnchor = avatarImageView.topAnchor.constraint(equalTo: phv.topAnchor, constant: 16)
+        avatarImageViewleadingAnchor = avatarImageView.leadingAnchor.constraint(equalTo: phv.leadingAnchor, constant: 16)
+        avatarImageViewWidthAnchor = avatarImageView.widthAnchor.constraint(equalToConstant: 130)
+        avatarImageViewHeightAnchor = avatarImageView.heightAnchor.constraint(equalToConstant: 130)
+        avatarImageViewTopAnchor.isActive = true
+        avatarImageViewleadingAnchor.isActive = true
+        avatarImageViewWidthAnchor.isActive = true
+        avatarImageViewHeightAnchor.isActive = true
         return phv
     }()
 
@@ -35,7 +53,6 @@ class ProfileViewController: UIViewController {
     private lazy var exitImage: UIButton = {
         let exitImage = UIButton()
         exitImage.setImage(UIImage(systemName: "xmark"), for: .normal)
-        exitImage.alpha = 0
         exitImage.addTarget(self,
                             action: #selector(buttonExitPressed),
                             for: .touchUpInside)
@@ -43,8 +60,7 @@ class ProfileViewController: UIViewController {
         return exitImage
     }()
 
-    private lazy var avatarImageView = ProfileHeaderView().avatarImageView
-
+    private var isBigAvatar: Bool = false
 
     private var avatarImageViewTopAnchor: NSLayoutConstraint!
 
@@ -69,7 +85,6 @@ class ProfileViewController: UIViewController {
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
         view.addSubview(tableView)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
-//        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileHeaderView.id)
         installingСonstraints()
     }
 
@@ -139,13 +154,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 extension ProfileViewController {
 
     @objc func onTap(_ tapRecognizer: UITapGestureRecognizer) {
-        view.addSubview(backView)
-        backView.addSubviews([
-            avatarImageView,
-            exitImage
+        guard isBigAvatar == false else { return }
+        isBigAvatar = true
+        view.addSubviews([
+            backView,
+            avatarImageView
         ])
+        self.backView.isHidden = false
+        backView.addSubview(exitImage)
+        exitImage.alpha = 0
         installingСonstraintsBeforeAnimation()
         installingСonstraintsAfterAnimation()
+        backView.bringSubviewToFront(avatarImageView)
         UIView.animate(withDuration: 0.5, delay: 0, animations: {
             self.backView.backgroundColor = UIColor(white: 1, alpha: 0.5)
             self.view.layoutIfNeeded()
@@ -161,23 +181,29 @@ extension ProfileViewController {
         avatarImageViewCenterYAnchor.isActive = false
         avatarImageViewWidthAnchor.isActive = false
         avatarImageViewHeightAnchor.isActive = false
+        avatarImageViewWidthAnchor = avatarImageView.widthAnchor.constraint(equalToConstant: 130)
+        avatarImageViewHeightAnchor = avatarImageView.heightAnchor.constraint(equalToConstant: 130)
         avatarImageViewTopAnchor.isActive = true
         avatarImageViewleadingAnchor.isActive = true
+        avatarImageViewWidthAnchor.isActive = true
+        avatarImageViewHeightAnchor.isActive = true
         UIView.animate(withDuration: 0.5, delay: 0, animations: {
             self.backView.backgroundColor = UIColor(white: 1, alpha: 0)
             self.view.layoutIfNeeded()
             self.avatarImageView.layer.cornerRadius = 65
         }) {_ in
             self.backView.isHidden = true
-            self.avatarImageView.isHidden = true
+            self.phv.addSubview(self.avatarImageView)
+            self.avatarImageViewTopAnchor.isActive = false
+            self.avatarImageViewleadingAnchor.isActive = false
+            self.avatarImageViewTopAnchor.isActive = true
+            self.avatarImageViewleadingAnchor.isActive = true
             self.view.layoutIfNeeded()
+            self.isBigAvatar = false
         }
-
     }
 
     private func installingСonstraintsBeforeAnimation() {
-        avatarImageViewTopAnchor = avatarImageView.topAnchor.constraint(equalTo: backView.safeAreaLayoutGuide.topAnchor, constant: 16)
-        avatarImageViewleadingAnchor = avatarImageView.leadingAnchor.constraint(equalTo: backView.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         backView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         backView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         backView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
@@ -192,6 +218,8 @@ extension ProfileViewController {
     private func installingСonstraintsAfterAnimation() {
         avatarImageViewTopAnchor.isActive = false
         avatarImageViewleadingAnchor.isActive = false
+        avatarImageViewWidthAnchor.isActive = false
+        avatarImageViewHeightAnchor.isActive = false
         avatarImageViewCenterXAnchor = avatarImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         avatarImageViewCenterYAnchor = avatarImageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         avatarImageViewWidthAnchor = avatarImageView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
