@@ -17,6 +17,65 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    lazy var avatarImageView: UIImageView = {
+        let avatarImageView = UIImageView(image: UIImage(named: "The_Cat"))
+        avatarImageView.layer.cornerRadius = 65
+        avatarImageView.clipsToBounds = true
+        avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.borderWidth = 3
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        return avatarImageView
+    }()
+
+    private lazy var phv: UIView = {
+        let phv = ProfileHeaderView()
+        phv.addSubview(avatarImageView)
+        avatarImageViewTopAnchor = avatarImageView.topAnchor.constraint(equalTo: phv.topAnchor, constant: 16)
+        avatarImageViewleadingAnchor = avatarImageView.leadingAnchor.constraint(equalTo: phv.leadingAnchor, constant: 16)
+        avatarImageViewWidthAnchor = avatarImageView.widthAnchor.constraint(equalToConstant: 130)
+        avatarImageViewHeightAnchor = avatarImageView.heightAnchor.constraint(equalToConstant: 130)
+        avatarImageViewTopAnchor.isActive = true
+        avatarImageViewleadingAnchor.isActive = true
+        avatarImageViewWidthAnchor.isActive = true
+        avatarImageViewHeightAnchor.isActive = true
+        return phv
+    }()
+
+    private lazy var backView: UIView = {
+        let backView = UIView()
+        backView.backgroundColor = UIColor(white: 1, alpha: 0)
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        return backView
+    }()
+
+    private lazy var exitImage: UIButton = {
+        let exitImage = UIButton()
+        exitImage.setImage(UIImage(systemName: "xmark"), for: .normal)
+        exitImage.addTarget(self,
+                            action: #selector(buttonExitPressed),
+                            for: .touchUpInside)
+        exitImage.translatesAutoresizingMaskIntoConstraints = false
+        return exitImage
+    }()
+
+    private var isBigAvatar: Bool = false
+
+    private var avatarImageViewTopAnchor: NSLayoutConstraint!
+
+    private var avatarImageViewleadingAnchor: NSLayoutConstraint!
+
+    private var avatarImageViewCenterXAnchor: NSLayoutConstraint!
+
+    private var avatarImageViewCenterYAnchor: NSLayoutConstraint!
+
+    private var avatarImageViewWidthAnchor: NSLayoutConstraint!
+
+    private var avatarImageViewHeightAnchor: NSLayoutConstraint!
+
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -52,7 +111,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
-        return ProfileHeaderView()
+        return phv
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,6 +147,87 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             cell.views.text = "Views: \(dataSource[indexPath.item].views)"
             return cell
         }
+    }
+
+}
+
+extension ProfileViewController {
+
+    @objc func onTap(_ tapRecognizer: UITapGestureRecognizer) {
+        guard isBigAvatar == false else { return }
+        isBigAvatar = true
+        view.addSubviews([
+            backView,
+            avatarImageView
+        ])
+        self.backView.isHidden = false
+        backView.addSubview(exitImage)
+        exitImage.alpha = 0
+        installingСonstraintsBeforeAnimation()
+        installingСonstraintsAfterAnimation()
+        backView.bringSubviewToFront(avatarImageView)
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            self.backView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+            self.view.layoutIfNeeded()
+            self.avatarImageView.layer.cornerRadius = 0
+        })
+        UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
+            self.exitImage.alpha = 1
+        })
+    }
+
+    @objc func buttonExitPressed() {
+        avatarImageViewCenterXAnchor.isActive = false
+        avatarImageViewCenterYAnchor.isActive = false
+        avatarImageViewWidthAnchor.isActive = false
+        avatarImageViewHeightAnchor.isActive = false
+        avatarImageViewWidthAnchor = avatarImageView.widthAnchor.constraint(equalToConstant: 130)
+        avatarImageViewHeightAnchor = avatarImageView.heightAnchor.constraint(equalToConstant: 130)
+        avatarImageViewTopAnchor.isActive = true
+        avatarImageViewleadingAnchor.isActive = true
+        avatarImageViewWidthAnchor.isActive = true
+        avatarImageViewHeightAnchor.isActive = true
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            self.backView.backgroundColor = UIColor(white: 1, alpha: 0)
+            self.view.layoutIfNeeded()
+            self.avatarImageView.layer.cornerRadius = 65
+        }) {_ in
+            self.backView.isHidden = true
+            self.phv.addSubview(self.avatarImageView)
+            self.avatarImageViewTopAnchor.isActive = false
+            self.avatarImageViewleadingAnchor.isActive = false
+            self.avatarImageViewTopAnchor.isActive = true
+            self.avatarImageViewleadingAnchor.isActive = true
+            self.view.layoutIfNeeded()
+            self.isBigAvatar = false
+        }
+    }
+
+    private func installingСonstraintsBeforeAnimation() {
+        backView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        backView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        backView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        backView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        avatarImageViewTopAnchor.isActive = true
+        avatarImageViewleadingAnchor.isActive = true
+        exitImage.topAnchor.constraint(equalTo: backView.topAnchor, constant: 16).isActive = true
+        exitImage.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -16).isActive = true
+        view.layoutIfNeeded()
+    }
+
+    private func installingСonstraintsAfterAnimation() {
+        avatarImageViewTopAnchor.isActive = false
+        avatarImageViewleadingAnchor.isActive = false
+        avatarImageViewWidthAnchor.isActive = false
+        avatarImageViewHeightAnchor.isActive = false
+        avatarImageViewCenterXAnchor = avatarImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        avatarImageViewCenterYAnchor = avatarImageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+        avatarImageViewWidthAnchor = avatarImageView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
+        avatarImageViewHeightAnchor = avatarImageView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
+        avatarImageViewCenterXAnchor.isActive = true
+        avatarImageViewCenterYAnchor.isActive = true
+        avatarImageViewWidthAnchor.isActive = true
+        avatarImageViewHeightAnchor.isActive = true
     }
 
 }
