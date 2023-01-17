@@ -54,16 +54,22 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }()
 
     lazy var logInButton: UIButton = {
-        var logInButton = UIButton(frame: .zero)
-        logInButton.setTitle("Log In", for: .normal)
-        logInButton.setTitleColor(.white, for: .normal)
+        var configuration = UIButton.Configuration.filled()
         if let imageButtonColor = UIImage(named: "blue_pixel") {
-            logInButton.setBackgroundImage(imageButtonColor, for: .normal)
-            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .selected)
-            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .highlighted)
-            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .disabled)
+            configuration.baseBackgroundColor = UIColor(patternImage: imageButtonColor)
         } else {
-            logInButton.backgroundColor = .systemBlue
+            configuration.baseBackgroundColor = .systemBlue
+        }
+        configuration.title = "Log In"
+        configuration.baseForegroundColor = .white
+        var logInButton = UIButton(configuration: configuration, primaryAction: nil)
+        logInButton.configurationUpdateHandler = { button in
+            switch button.state {
+                case .selected, .highlighted, .disabled:
+                    button.alpha = 0.8
+                default:
+                    button.alpha = 1
+            }
         }
         logInButton.layer.cornerRadius = 10
         logInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -159,17 +165,6 @@ extension LogInViewController {
         navigationController?.pushViewController(pvc, animated: true)
     }
 
-}
-
-extension UIImage {
-    
-    func image(alpha: CGFloat) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(at: .zero, blendMode: .normal, alpha: alpha)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
-    }
 }
 
 extension UIViewController {
