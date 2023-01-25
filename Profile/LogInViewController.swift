@@ -240,6 +240,8 @@ extension LogInViewController {
         }
     }
 
+}
+
 extension UIViewController {
 
     func autoHideTheKeyboard(_ view: UIView) {
