@@ -41,6 +41,20 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return passwordTextField
     }()
 
+    private lazy var errorNumberPassword: UILabel = {
+        let errorNumberPassword = UILabel()
+        errorNumberPassword.text = "Enter a password of at least 8 characters long!"
+        errorNumberPassword.font = UIFont(name: "regular", size: 8)
+        errorNumberPassword.textColor = .red
+        errorNumberPassword.isHidden = true
+        errorNumberPassword.translatesAutoresizingMaskIntoConstraints = false
+        return errorNumberPassword
+    }()
+
+    private var stackTextFieldLeadingAnchor: NSLayoutConstraint!
+
+    private var stackTextFieldTrailingAnchor: NSLayoutConstraint!
+
     private lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
         stackTextField.axis = .vertical
@@ -49,21 +63,28 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         stackTextField.translatesAutoresizingMaskIntoConstraints = false
         stackTextField.addArrangedSubview(loginTextField)
         stackTextField.addArrangedSubview(passwordTextField)
-
+        stackTextFieldLeadingAnchor = stackTextField.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+        stackTextFieldTrailingAnchor = stackTextField.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         return stackTextField
     }()
 
     lazy var logInButton: UIButton = {
-        var logInButton = UIButton(frame: .zero)
-        logInButton.setTitle("Log In", for: .normal)
-        logInButton.setTitleColor(.white, for: .normal)
+        var configuration = UIButton.Configuration.filled()
         if let imageButtonColor = UIImage(named: "blue_pixel") {
-            logInButton.setBackgroundImage(imageButtonColor, for: .normal)
-            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .selected)
-            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .highlighted)
-            logInButton.setBackgroundImage(imageButtonColor.image(alpha: 0.8), for: .disabled)
+            configuration.baseBackgroundColor = UIColor(patternImage: imageButtonColor)
         } else {
-            logInButton.backgroundColor = .systemBlue
+            configuration.baseBackgroundColor = .systemBlue
+        }
+        configuration.title = "Log In"
+        configuration.baseForegroundColor = .white
+        var logInButton = UIButton(configuration: configuration, primaryAction: nil)
+        logInButton.configurationUpdateHandler = { button in
+            switch button.state {
+                case .selected, .highlighted, .disabled:
+                    button.alpha = 0.8
+                default:
+                    button.alpha = 1
+            }
         }
         logInButton.layer.cornerRadius = 10
         logInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -78,6 +99,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         scrollView.addSubviews([
             logo,
             stackTextField,
+            errorNumberPassword,
             logInButton
         ])
         installingСonstraints()
@@ -117,10 +139,12 @@ extension LogInViewController {
             logo.heightAnchor.constraint(equalToConstant: 100),
             logo.widthAnchor.constraint(equalToConstant: 100),
             stackTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
-            stackTextField.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            stackTextField.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            stackTextFieldLeadingAnchor,
+            stackTextFieldTrailingAnchor,
             stackTextField.heightAnchor.constraint(equalToConstant: 100),
-            logInButton.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 16),
+            errorNumberPassword.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 2),
+            errorNumberPassword.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            logInButton.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 24),
             logInButton.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logInButton.heightAnchor.constraint(equalToConstant: 50)
@@ -155,21 +179,67 @@ extension LogInViewController {
     }
 
     @objc func buttonActionLogIn() {
+        normalView()
+        guard loginTextField.text != "" || passwordTextField.text != "" else {
+            emptyField(textFild: loginTextField)
+            emptyField(textFild: passwordTextField)
+            twitching()
+            return
+        }
+        guard loginTextField.text != "" else {
+            emptyField(textFild: loginTextField)
+            twitching()
+            return
+        }
+        guard passwordTextField.text != "" else {
+            emptyField(textFild: passwordTextField)
+            twitching()
+            return
+        }
+        guard let passwordTextField = passwordTextField.text else { return }
+        guard passwordTextField.count >= 8 else {
+            UIView.animate(withDuration: 0.5, delay: 0, animations: {
+                self.emptyField(textFild: self.passwordTextField)
+            }) {_ in
+                self.errorNumberPassword.isHidden = false
+            }
+            twitching()
+            return
+        }
+        normalView()
         let pvc = ProfileViewController()
         navigationController?.pushViewController(pvc, animated: true)
     }
 
-}
-
-extension UIImage {
-    
-    func image(alpha: CGFloat) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(at: .zero, blendMode: .normal, alpha: alpha)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
+    private func emptyField(textFild: UITextField) {
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            textFild.layer.borderWidth = 1
+            textFild.layer.borderColor = UIColor.red.cgColor
+        })
     }
+
+    private func normalView() {
+        UIView.animate(withDuration: 0, delay: 0, animations: {
+            self.generalSettingsForTextFild(self.loginTextField)
+            self.generalSettingsForTextFild(self.passwordTextField)
+        }) {_ in
+            self.errorNumberPassword.isHidden = true
+        }
+    }
+
+    private func twitching() {
+        UIView.animate(withDuration: 0.05,  animations: {
+            UIView.modifyAnimations(withRepeatCount: 6, autoreverses: true) {
+                self.stackTextFieldLeadingAnchor.constant = 11
+                self.stackTextFieldTrailingAnchor.constant = -21
+                self.view.layoutIfNeeded()
+            }
+        }) {_ in
+            self.stackTextFieldLeadingAnchor.constant = 16
+            self.stackTextFieldTrailingAnchor.constant = -16
+        }
+    }
+
 }
 
 extension UIViewController {
