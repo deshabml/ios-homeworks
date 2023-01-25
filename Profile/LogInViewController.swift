@@ -161,6 +161,7 @@ extension LogInViewController {
         textFild.tintColor = UIColor(named: "ColorSet")
         textFild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textFild.frame.height))
         textFild.leftViewMode = .always
+        textFild.keyboardType = .asciiCapable
         textFild.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -206,7 +207,18 @@ extension LogInViewController {
             twitching()
             return
         }
+        guard let loginTextField = loginTextField.text else { return }
         normalView()
+        if loginTextField != defaultAccount.login {
+            let alert = UIAlertController(title: "Warning!", message: "Login is wrong \"\(defaultAccount.login)\"", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+        }
+        if passwordTextField != defaultAccount.password {
+            let alert = UIAlertController(title: "Warning!", message: "Password is wrong \"\(defaultAccount.password)\"", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+        }
         let pvc = ProfileViewController()
         navigationController?.pushViewController(pvc, animated: true)
     }
@@ -237,6 +249,11 @@ extension LogInViewController {
             self.stackTextFieldLeadingAnchor.constant = 16
             self.stackTextFieldTrailingAnchor.constant = -16
         }
+    }
+
+    private var defaultAccount: (login: String, password: String) {
+        let defaultAccount = (login: "user@mail.ru", password: "Password")
+        return defaultAccount
     }
 
 }
