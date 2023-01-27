@@ -5,14 +5,11 @@
 //  Created by Лаборатория on 27.01.2023.
 //
 
-import Foundation
-
 final class Photos {
 
     static let shared: Photos = .init()
 
-    let photos: [String] = {
-        [
+    let photos: [String] = [
             "photo_01",
             "photo_02",
             "photo_03",
@@ -34,6 +31,5 @@ final class Photos {
             "photo_19",
             "photo_20"
         ]
-    }()
 
 }

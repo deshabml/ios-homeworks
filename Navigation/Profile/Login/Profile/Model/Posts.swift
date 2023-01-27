@@ -5,8 +5,6 @@
 //  Created by Лаборатория on 11.12.2022.
 //
 
-import Foundation
-
 struct Post {
         var author: String
         var description: String
@@ -19,8 +17,7 @@ final class Posts {
 
     static let shared: Posts = .init()
 
-    let posts: [Post]  = {
-        let posts = [
+    let posts: [Post]  = [
         Post(author: "Хендай Автоклуб",
              description: """
                         Их осталось 11!
@@ -57,7 +54,5 @@ final class Posts {
              likes: 327,
              views: 29_000)
     ]
-        return posts
-    }()
 
 }

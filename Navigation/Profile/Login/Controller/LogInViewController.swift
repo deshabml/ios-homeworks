@@ -104,7 +104,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         self.autoHideTheKeyboard(scrollView)
     }
 
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
@@ -177,44 +176,8 @@ extension LogInViewController {
 
     @objc func buttonActionLogIn() {
         normalView()
-        guard loginTextField.text != "" || passwordTextField.text != "" else {
-            emptyField(textFild: loginTextField)
-            emptyField(textFild: passwordTextField)
-            twitching()
-            return
-        }
-        guard loginTextField.text != "" else {
-            emptyField(textFild: loginTextField)
-            twitching()
-            return
-        }
-        guard passwordTextField.text != "" else {
-            emptyField(textFild: passwordTextField)
-            twitching()
-            return
-        }
-        guard let passwordTextField = passwordTextField.text else { return }
-        guard passwordTextField.count >= 8 else {
-            UIView.animate(withDuration: 0.5, delay: 0, animations: {
-                self.emptyField(textFild: self.passwordTextField)
-            }) {_ in
-                self.errorNumberPassword.isHidden = false
-            }
-            twitching()
-            return
-        }
-        guard let loginTextField = loginTextField.text else { return }
+        guard animatedErrors() else { return }
         normalView()
-        if loginTextField != defaultAccount.login {
-            let alert = UIAlertController(title: "Warning!", message: "Login is wrong \"\(defaultAccount.login)\"", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
-            present(alert, animated: true, completion: nil)
-        }
-        if passwordTextField != defaultAccount.password {
-            let alert = UIAlertController(title: "Warning!", message: "Password is wrong \"\(defaultAccount.password)\"", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
-            present(alert, animated: true, completion: nil)
-        }
         let pvc = ProfileViewController()
         navigationController?.pushViewController(pvc, animated: true)
     }
@@ -234,6 +197,55 @@ extension LogInViewController {
         })
     }
 
+    private func animatedErrors() -> Bool {
+        do {
+            try CheckAuthorization.shared.checkAuthorization(login: loginTextField.text, password: passwordTextField.text)
+        } catch ErrorsAuthorization.emptyAll {
+            emptyField(textFild: loginTextField)
+            emptyField(textFild: passwordTextField)
+            twitching()
+            return false
+        } catch ErrorsAuthorization.emptyLogin {
+            emptyField(textFild: loginTextField)
+            twitching()
+            return false
+        } catch ErrorsAuthorization.emptyPassword {
+            emptyField(textFild: passwordTextField)
+            twitching()
+            return false
+        } catch ErrorsAuthorization.shortPassword {
+            UIView.animate(withDuration: 0.5, delay: 0, animations: {
+                self.emptyField(textFild: self.passwordTextField)
+            }) {_ in
+                self.errorNumberPassword.isHidden = false
+            }
+            twitching()
+            return false
+        } catch ErrorsAuthorization.nonExistentlogin {
+            let alert = UIAlertController(title: "Warning!", message: "Login is wrong \"\(CheckAuthorization.shared.defaultAccount.login)\"", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        } catch ErrorsAuthorization.nonExistentPassword {
+            let alert = UIAlertController(title: "Warning!", message: "Password is wrong \"\(CheckAuthorization.shared.defaultAccount.password)\"", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        } catch ErrorsAuthorization.notMail {
+            let alert = UIAlertController(title: "Warning!", message: "not e-mail", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+        catch {
+            let alert = UIAlertController(title: "Warning!", message: "Unknown error", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+        return true
+    }
+
     private func twitching() {
         UIView.animate(withDuration: 0.05,  animations: {
             UIView.modifyAnimations(withRepeatCount: 6, autoreverses: true) {
@@ -245,11 +257,6 @@ extension LogInViewController {
             self.stackTextFieldLeadingAnchor.constant = 16
             self.stackTextFieldTrailingAnchor.constant = -16
         }
-    }
-
-    private var defaultAccount: (login: String, password: String) {
-        let defaultAccount = (login: "user@mail.ru", password: "Password")
-        return defaultAccount
     }
 
 }
