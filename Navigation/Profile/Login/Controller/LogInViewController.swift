@@ -18,7 +18,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     private lazy var logo: UIImageView = {
         let logo = UIImageView(image: UIImage(named: "logo"))
-        logo.translatesAutoresizingMaskIntoConstraints = false
         return logo
     }()
 
@@ -41,15 +40,28 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return passwordTextField
     }()
 
+    private lazy var errorNumberPassword: UILabel = {
+        let errorNumberPassword = UILabel()
+        errorNumberPassword.text = "Enter a password of at least 8 characters long!"
+        errorNumberPassword.font = UIFont(name: "regular", size: 8)
+        errorNumberPassword.textColor = .red
+        errorNumberPassword.isHidden = true
+        return errorNumberPassword
+    }()
+
+    private var stackTextFieldLeadingAnchor: NSLayoutConstraint!
+
+    private var stackTextFieldTrailingAnchor: NSLayoutConstraint!
+
     private lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
         stackTextField.axis = .vertical
         stackTextField.distribution = .fillEqually
         stackTextField.spacing = 0
-        stackTextField.translatesAutoresizingMaskIntoConstraints = false
         stackTextField.addArrangedSubview(loginTextField)
         stackTextField.addArrangedSubview(passwordTextField)
-
+        stackTextFieldLeadingAnchor = stackTextField.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+        stackTextFieldTrailingAnchor = stackTextField.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         return stackTextField
     }()
 
@@ -72,7 +84,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             }
         }
         logInButton.layer.cornerRadius = 10
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
         logInButton.addTarget(self, action: #selector(buttonActionLogIn), for: .touchUpInside)
         return logInButton
     }()
@@ -84,6 +95,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         scrollView.addSubviews([
             logo,
             stackTextField,
+            errorNumberPassword,
             logInButton
         ])
         installingСonstraints()
@@ -91,7 +103,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         scrollView.keyboardDismissMode = .interactive
         self.autoHideTheKeyboard(scrollView)
     }
-
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -123,10 +134,12 @@ extension LogInViewController {
             logo.heightAnchor.constraint(equalToConstant: 100),
             logo.widthAnchor.constraint(equalToConstant: 100),
             stackTextField.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
-            stackTextField.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            stackTextField.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            stackTextFieldLeadingAnchor,
+            stackTextFieldTrailingAnchor,
             stackTextField.heightAnchor.constraint(equalToConstant: 100),
-            logInButton.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 16),
+            errorNumberPassword.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 2),
+            errorNumberPassword.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            logInButton.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 24),
             logInButton.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logInButton.heightAnchor.constraint(equalToConstant: 50)
@@ -143,6 +156,7 @@ extension LogInViewController {
         textFild.tintColor = UIColor(named: "ColorSet")
         textFild.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textFild.frame.height))
         textFild.leftViewMode = .always
+        textFild.keyboardType = .asciiCapable
         textFild.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -161,8 +175,88 @@ extension LogInViewController {
     }
 
     @objc func buttonActionLogIn() {
+        normalView()
+        guard animatedErrors() else { return }
+        normalView()
         let pvc = ProfileViewController()
         navigationController?.pushViewController(pvc, animated: true)
+    }
+
+    private func emptyField(textFild: UITextField) {
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            textFild.layer.borderWidth = 1
+            textFild.layer.borderColor = UIColor.red.cgColor
+        })
+    }
+
+    private func normalView() {
+        UIView.animate(withDuration: 0, delay: 0, animations: {
+            self.generalSettingsForTextFild(self.loginTextField)
+            self.generalSettingsForTextFild(self.passwordTextField)
+            self.errorNumberPassword.isHidden = true
+        })
+    }
+
+    private func animatedErrors() -> Bool {
+        do {
+            try CheckAuthorization.shared.checkAuthorization(login: loginTextField.text, password: passwordTextField.text)
+        } catch ErrorsAuthorization.emptyAll {
+            emptyField(textFild: loginTextField)
+            emptyField(textFild: passwordTextField)
+            twitching()
+            return false
+        } catch ErrorsAuthorization.emptyLogin {
+            emptyField(textFild: loginTextField)
+            twitching()
+            return false
+        } catch ErrorsAuthorization.emptyPassword {
+            emptyField(textFild: passwordTextField)
+            twitching()
+            return false
+        } catch ErrorsAuthorization.shortPassword {
+            UIView.animate(withDuration: 0.5, delay: 0, animations: {
+                self.emptyField(textFild: self.passwordTextField)
+            }) {_ in
+                self.errorNumberPassword.isHidden = false
+            }
+            twitching()
+            return false
+        } catch ErrorsAuthorization.nonExistentlogin {
+            let alert = UIAlertController(title: "Warning!", message: "Login is wrong \"\(CheckAuthorization.shared.defaultAccount.login)\"", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        } catch ErrorsAuthorization.nonExistentPassword {
+            let alert = UIAlertController(title: "Warning!", message: "Password is wrong \"\(CheckAuthorization.shared.defaultAccount.password)\"", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        } catch ErrorsAuthorization.notMail {
+            let alert = UIAlertController(title: "Warning!", message: "not e-mail", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+        catch {
+            let alert = UIAlertController(title: "Warning!", message: "Unknown error", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "try again", style: .cancel ))
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+        return true
+    }
+
+    private func twitching() {
+        UIView.animate(withDuration: 0.05,  animations: {
+            UIView.modifyAnimations(withRepeatCount: 6, autoreverses: true) {
+                self.stackTextFieldLeadingAnchor.constant = 11
+                self.stackTextFieldTrailingAnchor.constant = -21
+                self.view.layoutIfNeeded()
+            }
+        }) {_ in
+            self.stackTextFieldLeadingAnchor.constant = 16
+            self.stackTextFieldTrailingAnchor.constant = -16
+        }
     }
 
 }

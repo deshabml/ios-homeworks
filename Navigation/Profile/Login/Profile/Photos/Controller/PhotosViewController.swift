@@ -9,7 +9,7 @@ import UIKit
 
 class PhotosViewController: UIViewController {
 
-    private var dataSource: [String] = photos
+    private var dataSource: [String] = Photos.shared.photos
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
@@ -87,33 +87,4 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         return CGSize(width: (UIScreen.main.bounds.width - 32) / 3, height: (UIScreen.main.bounds.width - 32) / 3)
     }
 
-}
-
-extension PhotosViewController {
-
-    static var photos: [String] {
-    [
-        "photo_01",
-        "photo_02",
-        "photo_03",
-        "photo_04",
-        "photo_05",
-        "photo_06",
-        "photo_07",
-        "photo_08",
-        "photo_09",
-        "photo_10",
-        "photo_11",
-        "photo_12",
-        "photo_13",
-        "photo_14",
-        "photo_15",
-        "photo_16",
-        "photo_17",
-        "photo_18",
-        "photo_19",
-        "photo_20"
-    ]
-}
-    
 }

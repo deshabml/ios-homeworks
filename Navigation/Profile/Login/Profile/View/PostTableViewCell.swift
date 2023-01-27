@@ -19,7 +19,6 @@ class PostTableViewCell: UITableViewCell {
         author.font = UIFont.boldSystemFont(ofSize: 20)
         author.textColor = .black
         author.numberOfLines = 2
-        author.translatesAutoresizingMaskIntoConstraints = false
         return author
     }()
 
@@ -28,7 +27,6 @@ class PostTableViewCell: UITableViewCell {
         postImageView.frame = frame
         postImageView.contentMode = .scaleAspectFit
         postImageView.backgroundColor = .black
-        postImageView.translatesAutoresizingMaskIntoConstraints = false
         return postImageView
     }()
 
@@ -37,7 +35,6 @@ class PostTableViewCell: UITableViewCell {
         descriptionText.textColor = .systemGray
         descriptionText.font = UIFont.systemFont(ofSize: 14)
         descriptionText.numberOfLines = 0
-        descriptionText.translatesAutoresizingMaskIntoConstraints = false
         return descriptionText
     }()
 
@@ -46,7 +43,6 @@ class PostTableViewCell: UITableViewCell {
         likes.textColor = .black
         likes.font = UIFont.systemFont(ofSize: 16)
         likes.numberOfLines = 0
-        likes.translatesAutoresizingMaskIntoConstraints = false
         return likes
     }()
 
@@ -55,7 +51,6 @@ class PostTableViewCell: UITableViewCell {
         views.textColor = .black
         views.font = UIFont.systemFont(ofSize: 16)
         views.numberOfLines = 0
-        views.translatesAutoresizingMaskIntoConstraints = false
         return views
     }()
 
