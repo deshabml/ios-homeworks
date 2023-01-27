@@ -13,6 +13,8 @@ class PostTableViewCell: UITableViewCell {
 
     lazy var image: String = ""
 
+    lazy var likesInt: Int = 0
+
     lazy var author: UILabel = {
         let author = UILabel()
         author.text = ""
@@ -43,6 +45,9 @@ class PostTableViewCell: UITableViewCell {
         likes.textColor = .black
         likes.font = UIFont.systemFont(ofSize: 16)
         likes.numberOfLines = 0
+        likes.text = "Likes: \(likesInt)"
+        likes.isUserInteractionEnabled = true
+        likes.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapLikes)))
         return likes
     }()
 
@@ -68,7 +73,6 @@ class PostTableViewCell: UITableViewCell {
 
 extension PostTableViewCell {
 
-
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
             author.topAnchor.constraint(equalTo: topAnchor, constant: 16),
@@ -86,6 +90,11 @@ extension PostTableViewCell {
             views.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
             views.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
+    }
+
+    @objc func onTapLikes() {
+        likesInt += 1
+        likes.text = "Likes: \(likesInt)"
     }
     
 }
