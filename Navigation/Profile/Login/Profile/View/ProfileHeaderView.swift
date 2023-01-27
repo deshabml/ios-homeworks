@@ -46,6 +46,10 @@ class ProfileHeaderView: UIView {
         return setStatusButton
     }()
 
+    private var statusTextFieldLeadingAnchor: NSLayoutConstraint!
+
+    private var statusTextFieldTrailingAnchor: NSLayoutConstraint!
+
     private lazy var statusTextField: UITextField = {
         let statusTextField = UITextField(frame: .zero)
         statusTextField.backgroundColor = .white
@@ -59,6 +63,8 @@ class ProfileHeaderView: UIView {
         statusTextField.addTarget(self,
                                   action: #selector(statusTextChanged),
                                   for: .editingChanged)
+        statusTextFieldLeadingAnchor = statusTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 162)
+        statusTextFieldTrailingAnchor = statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         return statusTextField
     }()
 
@@ -87,6 +93,8 @@ class ProfileHeaderView: UIView {
     }
 
     @objc func buttonPressed() {
+        normalViewField(textFild: statusTextField)
+        guard animatedErrors() else { return }
         guard let textPrint = statusLabel.text else {return}
         print(textPrint)
         statusLabel.text = statusText
@@ -110,9 +118,9 @@ extension ProfileHeaderView {
             fullNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             fullNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 130 + 16 + 16),
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10),
-            statusTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16 + 130 + 16),
+            statusTextFieldLeadingAnchor,
+            statusTextFieldTrailingAnchor,
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             statusLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 40 ),
             statusLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16 + 130 + 16),
             statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -122,6 +130,45 @@ extension ProfileHeaderView {
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
             setStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
         ])
+    }
+
+    private func animatedErrors() -> Bool {
+        do {
+            try CheckStatusText.shared.checkAuthorization(statusText: statusTextField.text)
+        } catch ErrorsStatus.emptyStatusText {
+            emptyField(textFild: statusTextField)
+            twitching()
+            return false
+        } catch {
+            print("Unknown error")
+            return false
+        }
+        return true
+    }
+
+    private func emptyField(textFild: UITextField) {
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            textFild.layer.borderColor = UIColor.red.cgColor
+        })
+    }
+
+    private func normalViewField(textFild: UITextField) {
+        UIView.animate(withDuration: 0.5, delay: 0, animations: {
+            textFild.layer.borderColor = UIColor.black.cgColor
+        })
+    }
+
+    private func twitching() {
+        UIView.animate(withDuration: 0.05,  animations: {
+            UIView.modifyAnimations(withRepeatCount: 6, autoreverses: true) {
+                self.statusTextFieldLeadingAnchor.constant = 157
+                self.statusTextFieldTrailingAnchor.constant = -21
+                self.layoutIfNeeded()
+            }
+        }) {_ in
+            self.statusTextFieldLeadingAnchor.constant = 162
+            self.statusTextFieldTrailingAnchor.constant = -16
+        }
     }
 
 }
