@@ -16,14 +16,12 @@ class PhotosTableViewCell: UITableViewCell {
         nameLabel.text = "Photos"
         nameLabel.textColor = .black
         nameLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
 
     private lazy var nextImage: UIImageView = {
         let nextImage = UIImageView(image: UIImage(systemName: "arrow.forward"))
         nextImage.tintColor = .black
-        nextImage.translatesAutoresizingMaskIntoConstraints = false
         return nextImage
     }()
 
@@ -33,12 +31,11 @@ class PhotosTableViewCell: UITableViewCell {
         stackImage.distribution = .fillEqually
         stackImage.alignment = .fill
         stackImage.spacing = 8
-        stackImage.translatesAutoresizingMaskIntoConstraints = false
         stackAddArrangedSubview(stackImage, [
-            imageSettings(UIImageView(image: UIImage(named: PhotosViewController.photos[1]))),
-            imageSettings(UIImageView(image: UIImage(named: PhotosViewController.photos[2]))),
-            imageSettings(UIImageView(image: UIImage(named: PhotosViewController.photos[3]))),
-            imageSettings(UIImageView(image: UIImage(named: PhotosViewController.photos[4])))
+            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[1]))),
+            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[2]))),
+            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[3]))),
+            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[4])))
         ])
         return stackImage
     }()

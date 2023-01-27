@@ -18,7 +18,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     private lazy var logo: UIImageView = {
         let logo = UIImageView(image: UIImage(named: "logo"))
-        logo.translatesAutoresizingMaskIntoConstraints = false
         return logo
     }()
 
@@ -47,7 +46,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         errorNumberPassword.font = UIFont(name: "regular", size: 8)
         errorNumberPassword.textColor = .red
         errorNumberPassword.isHidden = true
-        errorNumberPassword.translatesAutoresizingMaskIntoConstraints = false
         return errorNumberPassword
     }()
 
@@ -60,7 +58,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         stackTextField.axis = .vertical
         stackTextField.distribution = .fillEqually
         stackTextField.spacing = 0
-        stackTextField.translatesAutoresizingMaskIntoConstraints = false
         stackTextField.addArrangedSubview(loginTextField)
         stackTextField.addArrangedSubview(passwordTextField)
         stackTextFieldLeadingAnchor = stackTextField.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 16)
@@ -87,7 +84,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             }
         }
         logInButton.layer.cornerRadius = 10
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
         logInButton.addTarget(self, action: #selector(buttonActionLogIn), for: .touchUpInside)
         return logInButton
     }()

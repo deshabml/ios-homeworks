@@ -18,7 +18,6 @@ class ProfileHeaderView: UIView {
         fullNameLabel.text = "Hipster Cat"
         fullNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
         fullNameLabel.textColor = .black
-        fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
         return fullNameLabel
     }()
 
@@ -27,7 +26,6 @@ class ProfileHeaderView: UIView {
         statusLabel.text = "Waiting for something..."
         statusLabel.font = UIFont(name: "regular", size: 14)
         statusLabel.textColor = .gray
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
         return statusLabel
 
     }()
@@ -45,7 +43,6 @@ class ProfileHeaderView: UIView {
         setStatusButton.addTarget(self,
                          action: #selector(buttonPressed),
                          for: .touchUpInside)
-        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
         return setStatusButton
     }()
 
@@ -62,7 +59,6 @@ class ProfileHeaderView: UIView {
         statusTextField.addTarget(self,
                                   action: #selector(statusTextChanged),
                                   for: .editingChanged)
-        statusTextField.translatesAutoresizingMaskIntoConstraints = false
         return statusTextField
     }()
 
