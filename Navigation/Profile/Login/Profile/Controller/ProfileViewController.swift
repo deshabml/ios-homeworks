@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
     private var posts: [Post] = Posts.shared.posts
 
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.sectionHeaderTopPadding = 0.2
@@ -89,7 +89,6 @@ class ProfileViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         tableView.reloadData()
     }
 
@@ -137,7 +136,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
-            cell.setupCell(post: posts[indexPath.item], index: indexPath.item)
+            cell.setupCell(post: posts[indexPath.item], index: indexPath.item, switchMode: true)
             return cell
         }
     }

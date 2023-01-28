@@ -11,8 +11,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 
     static let id = "PhotosCollectionViewCell"
 
-//    lazy var imageName: String = ""
-
     lazy var ImageView: UIImageView = {
         let ImageView = UIImageView()
         ImageView.frame = frame
