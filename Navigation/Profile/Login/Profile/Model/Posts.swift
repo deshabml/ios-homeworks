@@ -6,11 +6,12 @@
 //
 
 struct Post {
-        var author: String
-        var description: String
-        var image: String
-        var likes: Int
-        var views: Int
+    var author: String
+    var description: String
+    var descriptionShort: String
+    var image: String
+    var likes: Int
+    var views: Int
 }
 
 final class Posts {
@@ -25,6 +26,7 @@ final class Posts {
 
                         Ещё в феврале 2022 в РФ официально работали 60 автомобильных брендов. На отечественном рынке осталось три российских бренда...
                         """,
+             descriptionShort: "Их осталось 11!",
              image: "avto_v_rf",
              likes: 15,
              views: 731),
@@ -33,6 +35,7 @@ final class Posts {
                         Идеальный слоган 😂
                         ВАЗ, УАЗ, Камаз, Белаз
                         """,
+             descriptionShort: "Идеальный слоган 😂",
              image: "uaz_na_glaz",
              likes: 2,
              views: 66),
@@ -42,6 +45,7 @@ final class Posts {
                         В США заметили редчайший погодный феномен - облака Кельвина-Гельмгольца.
                         Они выглядят как идеальные волны.
                         """,
+             descriptionShort: "Природа включила Айвазовского.",
              image: "priroda_aivozovskiy",
              likes: 337,
              views: 24_000),
@@ -50,6 +54,7 @@ final class Posts {
                         Вот такой подарок электрику от пчёл.
                         Подвид медоностных пчёл с допуском до и выше 1000 вольт
                         """,
+             descriptionShort: "Вот такой подарок электрику от пчёл.",
              image: "pchela_elektric",
              likes: 327,
              views: 29_000)

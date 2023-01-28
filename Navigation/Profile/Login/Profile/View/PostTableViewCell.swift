@@ -121,7 +121,11 @@ extension PostTableViewCell {
     func setupCell(post: Post, index: Int, switchMode: Bool) {
         author.text = post.author
         postImageView.image = UIImage(named: post.image)
-        descriptionText.text = post.description
+        if switchMode {
+            descriptionText.text = post.descriptionShort
+        } else {
+            descriptionText.text = post.description
+        }
         likes.text = "Likes: \(Posts.shared.posts[index].likes)"
         views.text = "Views: \(Posts.shared.posts[index].views)"
         self.index = index
