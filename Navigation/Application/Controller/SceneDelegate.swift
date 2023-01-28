@@ -32,6 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             blue: 247/255,
             alpha: 1.0)
         tabBar.tabBar.tintColor = UIColor(named: "ColorSet")
+        tabBar.selectedIndex = 1
         return tabBar
     }
 
@@ -40,7 +41,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: winScene)
         window.rootViewController = creatTabBar()
         window.makeKeyAndVisible()
-
         self.window = window
     }
 
