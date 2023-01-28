@@ -11,9 +11,11 @@ class PostTableViewCell: UITableViewCell {
 
     static let id = "PostTableViewCell"
 
-    lazy var image: String = ""
-
-    lazy var likesInt: Int = 0
+    private lazy var index: Int = 0
+//
+//    lazy var likesInt: Int = 0
+//
+//    lazy var viewsInt: Int = 0
 
     lazy var author: UILabel = {
         let author = UILabel()
@@ -25,7 +27,7 @@ class PostTableViewCell: UITableViewCell {
     }()
 
     lazy var postImageView: UIImageView = {
-        let postImageView = UIImageView(image: UIImage(named: image))
+        let postImageView = UIImageView()
         postImageView.frame = frame
         postImageView.contentMode = .scaleAspectFit
         postImageView.backgroundColor = .black
@@ -45,7 +47,6 @@ class PostTableViewCell: UITableViewCell {
         likes.textColor = .black
         likes.font = UIFont.systemFont(ofSize: 16)
         likes.numberOfLines = 0
-        likes.text = "Likes: \(likesInt)"
         likes.isUserInteractionEnabled = true
         likes.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapLikes)))
         return likes
@@ -93,8 +94,18 @@ extension PostTableViewCell {
     }
 
     @objc func onTapLikes() {
-        likesInt += 1
-        likes.text = "Likes: \(likesInt)"
+        Posts.shared.posts[index].likes += 1
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
+        layoutIfNeeded()
+    }
+
+    func setupCell(post: Post, index: Int) {
+        author.text = post.author
+        postImageView.image = UIImage(named: post.image)
+        descriptionText.text = post.description
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
+        views.text = "Views: \(Posts.shared.posts[index].views)"
+        self.index = index
     }
     
 }

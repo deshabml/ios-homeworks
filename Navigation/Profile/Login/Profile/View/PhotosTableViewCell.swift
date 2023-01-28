@@ -32,10 +32,10 @@ class PhotosTableViewCell: UITableViewCell {
         stackImage.alignment = .fill
         stackImage.spacing = 8
         stackAddArrangedSubview(stackImage, [
+            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[0]))),
             imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[1]))),
             imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[2]))),
-            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[3]))),
-            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[4])))
+            imageSettings(UIImageView(image: UIImage(named: Photos.shared.photos[3])))
         ])
         return stackImage
     }()

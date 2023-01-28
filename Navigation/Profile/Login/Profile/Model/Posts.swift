@@ -17,7 +17,7 @@ final class Posts {
 
     static let shared: Posts = .init()
 
-    let posts: [Post]  = [
+    var posts: [Post]  = [
         Post(author: "Хендай Автоклуб",
              description: """
                         Их осталось 11!
