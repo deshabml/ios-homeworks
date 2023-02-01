@@ -11,7 +11,9 @@ class PostTableViewCell: UITableViewCell {
 
     static let id = "PostTableViewCell"
 
-    lazy var image: String = ""
+    private lazy var index: Int = 0
+
+    private lazy var switchMode: Bool = false
 
     lazy var author: UILabel = {
         let author = UILabel()
@@ -23,10 +25,12 @@ class PostTableViewCell: UITableViewCell {
     }()
 
     lazy var postImageView: UIImageView = {
-        let postImageView = UIImageView(image: UIImage(named: image))
+        let postImageView = UIImageView()
         postImageView.frame = frame
         postImageView.contentMode = .scaleAspectFit
         postImageView.backgroundColor = .black
+        postImageView.isUserInteractionEnabled = true
+        postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapView)))
         return postImageView
     }()
 
@@ -43,6 +47,8 @@ class PostTableViewCell: UITableViewCell {
         likes.textColor = .black
         likes.font = UIFont.systemFont(ofSize: 16)
         likes.numberOfLines = 0
+        likes.isUserInteractionEnabled = true
+        likes.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTapLikes)))
         return likes
     }()
 
@@ -60,14 +66,17 @@ class PostTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        addSubviews([author, postImageView, descriptionText, likes, views])
+        addSubviews([author,
+                     postImageView,
+                     descriptionText,
+                     likes,
+                     views])
         installingСonstraints()
     }
 
 }
 
 extension PostTableViewCell {
-
 
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
@@ -86,6 +95,41 @@ extension PostTableViewCell {
             views.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 16),
             views.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
+    }
+
+    @objc func onTapLikes() {
+        Posts.shared.posts[index].likes += 1
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
+        layoutIfNeeded()
+    }
+
+    @objc func onTapView() {
+        guard switchMode else { return }
+        Posts.shared.posts[index].views += 1
+        views.text = "Views: \(Posts.shared.posts[index].views)"
+        layoutIfNeeded()
+        if let navigationController = ((superview as? UITableView)?.dataSource as? UIViewController)?.navigationController {
+            let dpvc = DetailPostViewController()
+            dpvc.index = index
+            let nc = UINavigationController(rootViewController: dpvc)
+            nc.modalPresentationStyle = .fullScreen
+            nc.modalTransitionStyle = .flipHorizontal
+            navigationController.present(nc, animated: true)
+        }
+    }
+
+    func setupCell(post: Post, index: Int, switchMode: Bool) {
+        author.text = post.author
+        postImageView.image = UIImage(named: post.image)
+        if switchMode {
+            descriptionText.text = post.descriptionShort
+        } else {
+            descriptionText.text = post.description
+        }
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
+        views.text = "Views: \(Posts.shared.posts[index].views)"
+        self.index = index
+        self.switchMode = switchMode
     }
     
 }

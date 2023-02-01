@@ -9,10 +9,15 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    private let dataSource: [Post] = Posts.shared.posts
+    private var posts: [Post] = Posts.shared.posts
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.sectionHeaderTopPadding = 0.2
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -78,13 +83,13 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.sectionHeaderTopPadding = 0.2
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
         view.addSubview(tableView)
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
         installingСonstraints()
+        tableView.reloadData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -121,7 +126,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         if section == 0 {
             return 1
         } else {
-            return dataSource.count
+            return posts.count
+        }
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.id, for: indexPath) as! PhotosTableViewCell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
+            cell.setupCell(post: posts[indexPath.item], index: indexPath.item, switchMode: true)
+            return cell
         }
     }
 
@@ -133,19 +149,17 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.id, for: indexPath) as! PhotosTableViewCell
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
-            cell.author.text = dataSource[indexPath.item].author
-            cell.image = dataSource[indexPath.item].image
-            cell.descriptionText.text = dataSource[indexPath.item].description
-            cell.likes.text = "Likes: \(dataSource[indexPath.item].likes)"
-            cell.views.text = "Views: \(dataSource[indexPath.item].views)"
-            return cell
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if indexPath.section == 1 {
+            return .delete
         }
+        return .none
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        posts.remove(at: indexPath.item)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        self.tableView.reloadData()
     }
 
 }

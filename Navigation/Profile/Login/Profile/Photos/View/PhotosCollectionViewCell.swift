@@ -11,10 +11,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 
     static let id = "PhotosCollectionViewCell"
 
-    lazy var imageName: String = ""
-
     lazy var ImageView: UIImageView = {
-        let ImageView = UIImageView(image: UIImage(named: imageName))
+        let ImageView = UIImageView()
         ImageView.frame = frame
         ImageView.translatesAutoresizingMaskIntoConstraints = false
         return ImageView
@@ -22,7 +20,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.addSubview(ImageView)
+        addSubview(ImageView)
         installingСonstraints()
     }
     
@@ -32,11 +30,15 @@ extension PhotosCollectionViewCell {
 
     private func installingСonstraints() {
         NSLayoutConstraint.activate([
-            ImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            ImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            ImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            ImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            ImageView.topAnchor.constraint(equalTo: topAnchor),
+            ImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            ImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            ImageView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+
+    func setupCell(photo: String) {
+        ImageView.image = UIImage(named: photo)
     }
     
 }
